@@ -1,0 +1,59 @@
+:root {
+    /* Light theme */
+    --light-bg: #ffffff;
+    --light-text: #333333;
+    --light-accent: #666666;
+    --light-border: #e0e0e0;
+    --light-hover: #f5f5f5;
+
+    /* Dark theme */
+    --dark-bg: #1a1a1a;
+    --dark-text: #ffffff;
+    --dark-accent: #cccccc;
+    --dark-border: #333333;
+    --dark-hover: #2a2a2a;
+}
+
+/* Light theme */
+.light-theme {
+    background-color: var(--light-bg);
+    color: var(--light-text);
+}
+
+.light-theme a {
+    color: var(--light-text);
+}
+
+.light-theme .info-item,
+.light-theme .education-item {
+    border-color: var(--light-border);
+}
+
+.light-theme .language-switcher button,
+.light-theme .theme-switcher button {
+    color: var(--light-text);
+}
+
+/* Dark theme */
+.dark-theme {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+.dark-theme a {
+    color: var(--dark-text);
+}
+
+.dark-theme .info-item,
+.dark-theme .education-item {
+    border-color: var(--dark-border);
+}
+
+.dark-theme .language-switcher button,
+.dark-theme .theme-switcher button {
+    color: var(--dark-text);
+}
+
+.dark-theme header {
+    border-color: var(--dark-border);
+}

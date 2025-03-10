@@ -1,0 +1,253 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--light-border);
+}
+
+nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Language Switcher */
+.language-switcher {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.language-switcher button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    opacity: 0.6;
+}
+
+.language-switcher button.active {
+    opacity: 1;
+    font-weight: bold;
+}
+
+/* Theme Switcher */
+.theme-switcher button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+}
+
+/* Personal Info Section */
+.personal-info {
+    padding: 4rem 0;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.col {
+    flex: 1;
+}
+
+/* Personal Details */
+.personal-details {
+    padding-right: 2rem;
+}
+
+.name {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.position {
+    font-size: 1.2rem;
+    color: var(--light-accent);
+    margin-bottom: 2rem;
+}
+
+.contact-info {
+    margin-bottom: 2rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--light-border);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-links a {
+    font-size: 1.5rem;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.social-links a:hover {
+    opacity: 0.7;
+}
+
+/* Avatar */
+.avatar-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.avatar {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--light-border);
+    transition: transform 0.3s;
+}
+
+.avatar:hover {
+    transform: scale(1.05);
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Education */
+.education {
+    padding-left: 2rem;
+}
+
+.education h2 {
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+}
+
+.education-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--light-border);
+}
+
+.education-item i {
+    font-size: 1.5rem;
+    color: var(--light-accent);
+}
+
+.education-details h3 {
+    margin-bottom: 0.5rem;
+}
+
+.education-details p {
+    color: var(--light-accent);
+    margin-bottom: 0.3rem;
+}
+
+.education-details span {
+    font-size: 0.9rem;
+    color: var(--light-accent);
+}
+
+/* Tech Stack Section */
+.tech-stack {
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.tech-stack h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 2rem;
+    justify-items: center;
+    padding: 0 1rem;
+}
+
+.tech-item {
+    width: 100px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 10px;
+}
+
+.tech-item i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.tech-item span {
+    font-size: 0.75rem;
+    text-align: center;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.2;
+}
+
+.tech-item:hover {
+    animation: shake 0.5s ease-in-out;
+}
+
+.tech-item:hover i {
+    transform: scale(1.2);
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+}
+
+/* Dark theme specific styles for tech stack */
+.dark-theme .tech-item i,
+.dark-theme .tech-item span {
+    color: var(--dark-text);
+}
