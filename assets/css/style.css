@@ -866,3 +866,240 @@ nav {
 .dark-theme .venn-diagram {
     filter: brightness(0.8) contrast(1.2);
 }
+
+/* Tooltips */
+.timeline-item {
+    position: relative;
+    cursor: pointer;
+}
+
+.timeline-tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+    white-space: nowrap;
+}
+
+.timeline-item:hover .timeline-tooltip {
+    opacity: 1;
+}
+
+/* Modal */
+.timeline-modal {
+    display: none; /* Mặc định ẩn */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 1001;
+}
+
+/* Khi modal được hiển thị */
+.timeline-modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    position: relative;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    width: 90%;
+    max-width: 1200px;
+    height: 90vh;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    border-bottom: 1px solid rgba(var(--accent-color-rgb), 0.2);
+}
+
+.modal-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.modal-close {
+    cursor: pointer;
+    font-size: 32px;
+    color: var(--text-color);
+    background: none;
+    border: none;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    background-color: rgba(var(--accent-color-rgb), 0.1);
+    color: var(--accent-color);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 30px;
+    padding: 30px;
+    overflow-y: auto;
+    height: calc(90vh - 81px); /* 81px là chiều cao của header */
+}
+
+.modal-media {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.modal-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal-video {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal-details {
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.modal-date {
+    font-size: 18px;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.modal-position {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.modal-achievements {
+    background-color: rgba(var(--accent-color-rgb), 0.05);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.modal-achievements li {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 25px;
+}
+
+.modal-achievements li::before {
+    content: '•';
+    color: var(--accent-color);
+    font-size: 20px;
+    position: absolute;
+    left: 0;
+    top: -2px;
+}
+
+.modal-description {
+    font-style: italic;
+    color: var(--text-secondary);
+    padding: 20px;
+    border-left: 3px solid var(--accent-color);
+    background-color: rgba(var(--accent-color-rgb), 0.05);
+    border-radius: 0 12px 12px 0;
+}
+
+@media (max-width: 1024px) {
+    .modal-content {
+        width: 95%;
+        height: 95vh;
+    }
+
+    .modal-body {
+        grid-template-columns: 1fr;
+        height: calc(95vh - 81px);
+    }
+
+    .modal-image {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    .modal-header {
+        padding: 15px 20px;
+    }
+
+    .modal-title {
+        font-size: 24px;
+    }
+
+    .modal-body {
+        padding: 20px;
+        height: calc(100vh - 71px);
+    }
+
+    .modal-image {
+        max-height: 250px;
+    }
+
+    .modal-date {
+        font-size: 16px;
+    }
+
+    .modal-position {
+        font-size: 18px;
+    }
+}
+
+/* Animation cho modal */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modal-content {
+    animation: modalFadeIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
