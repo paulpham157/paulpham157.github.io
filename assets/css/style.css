@@ -843,3 +843,27 @@ nav {
         font-size: 0.75rem;
     }
 }
+
+.experience-venn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+    padding: 1rem;
+}
+
+.venn-diagram {
+    max-width: 100%;
+    height: auto;
+    width: 600px;
+    transition: transform 0.3s ease;
+}
+
+.venn-diagram:hover {
+    transform: scale(1.05);
+}
+
+/* Dark theme styles */
+.dark-theme .venn-diagram {
+    filter: brightness(0.8) contrast(1.2);
+}
