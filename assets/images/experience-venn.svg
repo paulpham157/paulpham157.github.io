@@ -110,16 +110,12 @@
     
     <!-- Vòng tròn thứ tư - 2 năm AI -->
     <circle cx="400" cy="300" r="90" class="circle" fill="url(#ai-gradient)"/>
-    
-    <!-- Vòng tròn thứ năm - 1 năm Mobile -->
-    <circle cx="400" cy="370" r="60" class="circle" fill="url(#mobile-gradient)"/>
 
     <!-- Labels -->
     <text x="400" y="120" class="years">5 năm IT</text>
     <text x="220" y="300" class="years">4 năm Web</text>
     <text x="580" y="300" class="years">3 năm DevOps</text>
     <text x="400" y="250" class="years">2 năm AI</text>
-    <text x="400" y="480" class="years">1 năm Mobile</text>
 
     <!-- Chú thích -->
     <text x="400" y="550" class="label">Experience Venn Chart</text>
