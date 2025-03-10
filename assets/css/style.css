@@ -465,8 +465,9 @@ nav {
 
 /* Các mốc năm trên cột */
 .timeline-date {
+    padding: 10px;
+    width: max-content;
     position: absolute;
-    width: 120px;
     height: 40px;
     display: flex;
     align-items: center;
@@ -568,7 +569,6 @@ nav {
     .timeline-date {
         left: 40px;
         transform: translateX(-50%);
-        width: 100px;
         height: 35px;
         font-size: 1.1rem;
     }
@@ -617,7 +617,6 @@ nav {
 
     .timeline-date {
         left: 30px;
-        width: 90px;
         height: 32px;
         font-size: 1rem;
     }
