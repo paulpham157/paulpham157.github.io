@@ -14,57 +14,31 @@
     --dark-hover: #2a2a2a;
 }
 
-/* Light theme */
+/* Theme Colors */
 .light-theme {
-    background-color: var(--light-bg);
-    color: var(--light-text);
+    --bg-color: #ffffff;
+    --text-color: #1a1a1a;
+    --border-color: #e0e0e0;
+    transition: all 0.3s ease;
 }
 
-.light-theme a {
-    color: var(--light-text);
-}
-
-.light-theme .info-item,
-.light-theme .education-item {
-    border-color: var(--light-border);
-}
-
-.light-theme .language-switcher button,
-.light-theme .theme-switcher button {
-    color: var(--light-text);
-}
-
-/* Dark theme */
 .dark-theme {
-    background-color: var(--dark-bg);
-    color: var(--dark-text);
+    --bg-color: #1a1a1a;
+    --text-color: #ffffff;
+    --border-color: #333333;
+    transition: all 0.3s ease;
 }
 
-.dark-theme a {
-    color: var(--dark-text);
-}
-
-.dark-theme .info-item,
-.dark-theme .education-item {
-    border-color: var(--dark-border);
-}
-
-.dark-theme .language-switcher button,
-.dark-theme .theme-switcher button {
-    color: var(--dark-text);
-}
-
-.dark-theme header {
-    border-color: var(--dark-border);
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 /* Theme Switcher Styles */
 .theme-switcher {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px;
 }
 
 #theme-toggle {
@@ -116,22 +90,46 @@
     color: #ffffff;
 }
 
-/* Theme Colors */
+/* Light theme */
 .light-theme {
-    --bg-color: #ffffff;
-    --text-color: #1a1a1a;
-    --border-color: #e0e0e0;
-    transition: all 0.3s ease;
+    background-color: var(--light-bg);
+    color: var(--light-text);
 }
 
+.light-theme a {
+    color: var(--light-text);
+}
+
+.light-theme .info-item,
+.light-theme .education-item {
+    border-color: var(--light-border);
+}
+
+.light-theme .language-switcher button,
+.light-theme .theme-switcher button {
+    color: var(--light-text);
+}
+
+/* Dark theme */
 .dark-theme {
-    --bg-color: #1a1a1a;
-    --text-color: #ffffff;
-    --border-color: #333333;
-    transition: all 0.3s ease;
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
 }
 
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
+.dark-theme a {
+    color: var(--dark-text);
+}
+
+.dark-theme .info-item,
+.dark-theme .education-item {
+    border-color: var(--dark-border);
+}
+
+.dark-theme .language-switcher button,
+.dark-theme .theme-switcher button {
+    color: var(--dark-text);
+}
+
+.dark-theme header {
+    border-color: var(--dark-border);
 }
