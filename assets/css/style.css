@@ -264,6 +264,20 @@ nav {
     background-color: var(--bg-primary);
     border-radius: 12px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tech-item.hidden {
+    display: none;
 }
 
 .tech-item i {
@@ -295,6 +309,115 @@ nav {
 .tech-item:hover i {
     transform: scale(1.2);
     color: var(--accent-color);
+}
+
+/* Load More Button */
+.load-more-container {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.load-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    color: var(--accent-color);
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.load-more-btn:hover {
+    background: var(--accent-color);
+    color: white;
+    box-shadow: 0 5px 15px rgba(var(--accent-color-rgb), 0.3);
+}
+
+.load-more-btn i {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.load-more-btn:hover i {
+    transform: translateX(5px);
+}
+
+/* Dark theme adjustments */
+.dark-theme .tech-item {
+    background-color: var(--bg-primary-dark);
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dark-theme .tech-item:hover {
+    box-shadow: 0 5px 25px rgba(var(--accent-color-rgb), 0.3);
+}
+
+/* Responsive cho tech stack */
+@media screen and (max-width: 1024px) {
+    .tech-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 1rem;
+    }
+
+    .tech-item {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .tech-grid {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 0.8rem;
+        padding: 0 1rem;
+    }
+
+    .tech-item {
+        width: 90px;
+        height: 90px;
+        padding: 0.8rem;
+    }
+
+    .tech-item i {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .tech-item span {
+        font-size: 0.75rem;
+    }
+
+    .load-more-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .tech-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 0.5rem;
+    }
+
+    .tech-item {
+        width: 80px;
+        height: 80px;
+        padding: 0.5rem;
+    }
+
+    .tech-item span {
+        font-size: 0.7rem;
+    }
+
+    .load-more-btn {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.85rem;
+    }
 }
 
 /* Timeline Section */
