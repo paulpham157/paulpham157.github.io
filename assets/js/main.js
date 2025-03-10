@@ -65,3 +65,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Khởi tạo trạng thái ban đầu của nút
     updateLoadMoreButton();
 });
+
+// Tính tuổi dựa trên năm sinh 1996
+document.addEventListener('DOMContentLoaded', function() {
+    const birthYear = 1996;
+    const currentYear = new Date().getFullYear();
+    const age = currentYear - birthYear;
+    document.getElementById('age-value').textContent = age;
+});
