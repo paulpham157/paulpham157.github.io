@@ -219,39 +219,44 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             "Khám phá IKIGAI bản thân": {
                 images: [
-                    'assets/images/timeline/',
+                    'assets/images/timeline/3.1.ikigai.png',
                 ],
-                description: ''
+                description: 'Trong một lần vô tình xem được video về IKIGAI của diễn giả Lê Thẩm Dương, tôi đã tự hỏi bản thân thực sự cần và muốn làm gì trong cuộc đời. Từ đó, tôi đã thử qua nhiều công việc để tìm kiếm điều mà tôi thực sự yêu thích và muốn làm.'
             },
             "Comartek": {
                 images: [
-                    'assets/images/timeline/',
+                    'assets/images/timeline/4.1.comartek.jpg',
+                    'assets/images/timeline/4.2.comartek.jpg',
+                    'assets/images/timeline/4.3.comartek.jpg',
                 ],
-                description: ''
+                description: 'Bắt đầu với vị trí IT Helpdesk, sau đó tôi kiêm nhiệm thêm công việc phát triển và triển khai các website outsourcing. Vị trí IT Helpdesk được tiếp xúc với rất nhiều người trong, ngoài công ty. Từ nhân viên, quản lý tới khách hàng, đối tác; đủ các vị trí vai trò Dev, Tester, DevOps, PM, BA, CTO, COO, CEO, HR, Acountant... Có thể nói Comartek là công việc fulltime chính thức đầu tiên của tôi. Thời gian tiếp xúc với những con người ở đây đã cung cấp cho tôi một cái nhìn đa chiều, nhiều góc cạnh về các công việc, các giai đoạn xung quanh một dự án phần mềm.'
             },
-            "EdooSmart": {
+            "EdooSmart (2023-2024)": {
                 images: [
-                    'assets/images/timeline/',
+                    'assets/images/timeline/5.1.edoosmart.png',
+                    'assets/images/timeline/5.2.edoosmart.png',
                 ],
-                description: ''
-            },
-            "Công ty cổ phần giải pháp thanh toán Việt Tín": {
-                images: [
-                    'assets/images/timeline/',
-                ],
-                description: ''
+                description: 'EdooSmart là một đơn vị giúp cho việc học tập dễ dàng hơn. Ban đầu, tôi nhận dự án như bao job freelancer khác, tập trung vào xây dựng trang web và hệ thống học tập. Đến giai đoạn cuối 2022, đầu năm 2023, khi ChatGPT dần trở nên nổi tiếng; chúng tôi quan tâm tới việc nó có thể giúp ích tốt hơn cho các bạn học tập hay không. Từ đó, tôi đã bắt đầu những bước chân đầu tiên vào thế giới LLM và AI.'
             },
             "EdooTech": {
                 images: [
-                    'assets/images/timeline/',
+                    'assets/images/timeline/7.1.edootech.jpg',
                 ],
-                description: ''
+                description: 'Chúng tôi đi sâu vào nghiên cứu RAG. Ngoài học hỏi từ một số open source như Dify, BotPress... chúng tôi tự phát triển hệ thống RAG thông qua framework Langchain. Team không phân biệt Backend hay Frontend, mỗi người đều làm full-stack dưới sự hướng dẫn của 1 tiến sĩ Computer Science người Úc.'
             },
-            "EdooSmart": {
+            "Công ty cổ phần giải pháp thanh toán Việt Tín": {
                 images: [
-                    'assets/images/timeline/',
+                    'assets/images/timeline/6.1.viettin.JPG',
+                    'assets/images/timeline/6.2.viettin.JPG',
+                    'assets/images/timeline/6.3.viettin.JPG',
                 ],
-                description: ''
+                description: 'Tôi bắt đầu công việc tại phòng IT với vai trò Automation Test Engineer. Tôi đã từng làm việc với các công cụ như Selenium, Appium, Postman, CodeceptJS... để tự động hóa các test case cho các dự án của công ty. Bên cạnh đó tôi cũng quản lý mạng, hạ tầng, cung cấp hỗ trợ cho các phòng khác trong công ty. Giai đoạn năm 2024, tôi đề xuất các giải pháp, công cụ AI mà tôi đã tìm hiểu và đang sử dụng; đồng thời tham gia phát triển AI nhằm áp dụng trong sản phẩm chính.'
+            },
+            "EdooSmart (2025)": {
+                images: [
+                    'assets/images/timeline/8.1.edoosmart.jpg',
+                ],
+                description: 'Bén duyên với EdooSmart từ cuối 2022, tôi nhận thấy việc học luôn luôn cần thiết, bất kể ngoài kia có bao nhiêu công cụ AI mới ra đời mỗi ngày. Chúng ta cần học cách sử dụng chúng hiệu quả. Chúng ta cần học cách áp dụng chúng cho công việc. Ví dụ dev, thay vì code tay 10 tiếng thì có thể sử dụng Cursor như tôi để giảm thời gian xuống còn 1 tiếng. Tất nhiên, việc biết sử dụng công cụ không hề đơn giản, việc này cũng cần phải học. Với kỹ năng tốt nhất của mình là "Kỹ năng tự học", cộng với khả năng sử dụng công cụ AI tìm kiếm, tổng hợp, phân loại kiến thức như Perplexity, tôi tin rằng tôi sẽ tiến lên rất nhanh (thực tế là trước năm 2023, hiểu biết của tôi chỉ ở mức tiệm cận junior; chỉ sau 2 năm tìm hiểu và sử dụng AI, mức độ hiểu biết của tôi đã được mở rộng và đào sâu rất nhiều).'
             },
         };
         return data[title] || {};
