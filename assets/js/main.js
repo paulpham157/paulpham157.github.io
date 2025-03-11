@@ -310,3 +310,197 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+// Lazy Loading for Showcase iframes
+document.addEventListener('DOMContentLoaded', function() {
+    const lazyIframes = document.querySelectorAll('.lazy-iframe');
+    
+    const lazyLoad = target => {
+        const io = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const iframe = entry.target;
+                    const src = iframe.dataset.src;
+                    
+                    // Load the iframe
+                    iframe.src = src;
+                    
+                    // Add loaded class when iframe is loaded
+                    iframe.addEventListener('load', () => {
+                        iframe.classList.add('loaded');
+                        // Hide loading animation
+                        const loadingAnimation = iframe.parentElement.querySelector('.loading-animation');
+                        if (loadingAnimation) {
+                            loadingAnimation.style.display = 'none';
+                        }
+                    });
+
+                    // Remove observer after loading
+                    observer.disconnect();
+                }
+            });
+        });
+
+        io.observe(target);
+    };
+    
+    // Apply lazy loading to all showcase iframes
+    lazyIframes.forEach(lazyLoad);
+});
+
+// Showcase Modal Handling
+const projectUrls = {
+    'edoosmart': 'assets/images/showcase/EdooSmart.jpeg',
+    'edoosmart-practice': 'https://practice.edoosmart.com',
+    'woywoy': 'https://woywoystaycation.com.au',
+    'comartek': 'https://comartek.com',
+    'edoosmart-app': 'assets/images/showcase/EdooSmartApp.jpeg',
+    'berempah': 'assets/images/showcase/Berempah.jpeg',
+    'xeghep': 'https://xeghephanoimocchausonla.vn',
+    'artisan': 'assets/images/showcase/ArtisanAura.jpeg',
+    'duongminhthong': 'https://duongminhthong.vn/phap-ly-va-dau-tu-bds630653',
+    'gcc': 'https://gccbusiness.com.au'
+};
+
+// Thêm object mới để xác định loại nội dung (image hoặc iframe)
+const projectTypes = {
+    'edoosmart': 'image',
+    'edoosmart-practice': 'iframe',
+    'woywoy': 'iframe',
+    'comartek': 'iframe',
+    'edoosmart-app': 'image',
+    'berempah': 'image',
+    'xeghep': 'iframe',
+    'artisan': 'image',
+    'duongminhthong': 'iframe',
+    'gcc': 'iframe'
+};
+
+const projectTitles = {
+    'edoosmart': 'EdooSmart - CPA Program Learning Platform',
+    'edoosmart-practice': 'EdooSmart Practice - Learning Management System',
+    'woywoy': 'Woy Woy Staycation - Luxury Vacation Rental',
+    'comartek': 'Comartek - IT Solutions Provider',
+    'edoosmart-app': 'EdooSmart Mobile App',
+    'berempah': 'Berempah Malaysian Restaurant',
+    'xeghep': 'Xe Ghép Hà Nội - Mộc Châu - Sơn La',
+    'artisan': 'Artisan Aura Deco',
+    'duongminhthong': 'Dương Minh Thông - Bất Động Sản',
+    'gcc': 'GCC Business - Business Solutions'
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('showcase-modal');
+    const modalTitle = modal.querySelector('.modal-title');
+    const modalClose = modal.querySelector('.modal-close');
+    const iframe = modal.querySelector('iframe');
+    const showcaseItems = document.querySelectorAll('.showcase-item');
+    const embedContainer = modal.querySelector('.embed-container');
+
+    // Xử lý click vào showcase item
+    showcaseItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const projectId = this.dataset.project;
+            const projectUrl = projectUrls[projectId];
+            const projectTitle = projectTitles[projectId];
+            const projectType = projectTypes[projectId];
+
+            modalTitle.textContent = projectTitle;
+            
+            // Xóa nội dung cũ
+            embedContainer.innerHTML = '';
+            
+            if (projectType === 'image') {
+                // Hiển thị hình ảnh
+                const img = document.createElement('img');
+                img.src = projectUrl;
+                img.style.width = '100%';
+                img.style.maxWidth = 'none';
+                img.style.height = 'auto';
+                img.style.opacity = '0';
+                img.style.transition = 'opacity 0.3s ease';
+                
+                // Thêm container cho ảnh với khả năng scroll
+                const imgContainer = document.createElement('div');
+                imgContainer.style.width = '100%';
+                imgContainer.style.height = '100%';
+                imgContainer.style.overflowY = 'auto';
+                imgContainer.style.overflowX = 'hidden';
+                
+                // Thêm loading animation
+                const loading = document.createElement('div');
+                loading.className = 'loading-animation';
+                loading.innerHTML = `
+                    <div class="dots-animation">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <p>Đang tải...</p>
+                `;
+                
+                imgContainer.appendChild(img);
+                embedContainer.appendChild(loading);
+                embedContainer.appendChild(imgContainer);
+                
+                // Xử lý khi ảnh load xong
+                img.onload = function() {
+                    loading.style.display = 'none';
+                    img.style.opacity = '1';
+                };
+            } else {
+                // Hiển thị iframe như bình thường
+                const iframe = document.createElement('iframe');
+                iframe.className = 'lazy-iframe';
+                iframe.loading = 'lazy';
+                iframe.frameBorder = '0';
+                iframe.src = projectUrl;
+                
+                const loading = document.createElement('div');
+                loading.className = 'loading-animation';
+                loading.innerHTML = `
+                    <div class="dots-animation">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <p>Đang tải...</p>
+                `;
+                
+                embedContainer.appendChild(loading);
+                embedContainer.appendChild(iframe);
+                
+                iframe.addEventListener('load', function() {
+                    loading.style.display = 'none';
+                    this.classList.add('loaded');
+                });
+            }
+            
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    // Xử lý đóng modal
+    modalClose.addEventListener('click', closeModal);
+
+    // Đóng modal khi click ra ngoài
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Xử lý phím ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('show')) {
+            closeModal();
+        }
+    });
+
+    function closeModal() {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+        embedContainer.innerHTML = ''; // Xóa nội dung khi đóng modal
+    }
+});
