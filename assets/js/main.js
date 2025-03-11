@@ -236,14 +236,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     'assets/images/timeline/5.1.edoosmart.png',
                     'assets/images/timeline/5.2.edoosmart.png',
                 ],
-                description: 'EdooSmart là một đơn vị giúp cho việc học tập dễ dàng hơn. Ban đầu, tôi nhận dự án như bao job freelancer khác, tập trung vào xây dựng trang web và hệ thống học tập. Đến giai đoạn cuối 2022, đầu năm 2023, khi ChatGPT dần trở nên nổi tiếng; chúng tôi quan tâm tới việc nó có thể giúp ích tốt hơn cho các bạn học tập hay không. Từ đó, tôi đã bắt đầu những bước chân đầu tiên vào thế giới LLM và AI.'
+                description: 'EdooSmart là đơn vị tiên phong trong việc ứng dụng công nghệ để tối ưu hóa trải nghiệm học tập. Khởi đầu như một dự án freelance thông thường, tôi tập trung phát triển nền tảng web và hệ thống quản lý học tập. Tuy nhiên, sự xuất hiện và phát triển mạnh mẽ của ChatGPT vào cuối năm 2022, đầu năm 2023 đã mở ra một hướng đi mới đầy tiềm năng. Nhận thấy cơ hội to lớn trong việc tích hợp AI để nâng cao hiệu quả học tập, chúng tôi đã quyết định đầu tư nghiên cứu về các mô hình ngôn ngữ lớn (LLM) và trí tuệ nhân tạo. Đây chính là những bước đi đầu tiên trong hành trình khám phá AI nói chung và LLM nói riêng của tôi.'
             },
             "EdooTech": {
                 images: [
                     'assets/images/timeline/7.1.edootech.jpg',
                     'assets/images/timeline/7.2.binh-dan-hoc-ai.jpeg',
                 ],
-                description: 'Chúng tôi đi sâu vào nghiên cứu RAG. Ngoài học hỏi từ một số open source như Dify, BotPress... chúng tôi tự phát triển hệ thống RAG thông qua framework Langchain. Team không phân biệt Backend hay Frontend, mỗi người đều làm full-stack dưới sự hướng dẫn của 1 tiến sĩ Computer Science người Úc. Ngoài ra, trong năm 2024, tôi tham gia vào cộng đồng Bình Dân Học AI và hưởng ứng các phòng trào ở đây. Nhờ đó tôi có nhiêu hiểu biết về big data, cách các hệ thống vận hành từ raw data đến biểu diễn trực quan hoá và cuối cùng dẫn đến quyết định của con người.'
+                description: 'Chúng tôi tập trung nghiên cứu và phát triển hệ thống RAG (Retrieval Augmented Generation) sử dụng framework Langchain, kết hợp với việc học hỏi từ các dự án mã nguồn mở như Dify và BotPress. Dưới sự dẫn dắt của một thạc sĩ Computer Science người Úc, team chúng tôi làm việc theo mô hình full-stack, xoá bỏ ranh giới giữa Backend và Frontend. Song song với công việc, tôi tích cực tham gia cộng đồng Bình Dân Học AI trong năm 2024, mở rộng kiến thức về việc ứng dụng AI kết hợp với big data. Qua đó, tôi hiểu sâu sắc về quy trình xử lý dữ liệu từ nguồn thô, chuyển hoá thành các biểu diễn trực quan, hỗ trợ con người đưa ra những quyết định chính xác và hiệu quả.'
             },
             "Công ty cổ phần giải pháp thanh toán Việt Tín": {
                 images: [
