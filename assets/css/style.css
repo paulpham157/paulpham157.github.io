@@ -262,17 +262,21 @@ nav {
     justify-content: center;
     position: relative;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
     padding: 1rem;
     background-color: var(--bg-primary);
     border-radius: 12px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     opacity: 0;
     transform: translateY(20px);
-    animation: fadeInUp 0.5s ease forwards;
+    animation: fadeIn 0.5s ease forwards;
 }
 
-@keyframes fadeInUp {
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
     to {
         opacity: 1;
         transform: translateY(0);
@@ -694,9 +698,13 @@ nav {
 
 /* Timeline Animations */
 @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
     to {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateY(0);
     }
 }
 
@@ -983,7 +991,7 @@ nav {
 .modal-image {
     width: 100%;
     max-height: 400px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
@@ -1108,4 +1116,124 @@ nav {
 
 .modal-content {
     animation: modalFadeIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Gallery Controls */
+.gallery-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.gallery-prev,
+.gallery-next {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px 15px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.gallery-prev:hover,
+.gallery-next:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.gallery-indicator {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.modal-image-container {
+    position: relative;
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+}
+
+.modal-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+/* Thêm animation cho chuyển đổi ảnh */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-image.changing {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .gallery-controls {
+        bottom: 10px;
+        padding: 5px;
+    }
+
+    .gallery-prev,
+    .gallery-next {
+        font-size: 20px;
+        padding: 3px 10px;
+    }
+
+    .gallery-indicator {
+        font-size: 12px;
+    }
+}
+
+/* Gallery Bullets */
+.gallery-bullets {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.gallery-bullet {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gallery-bullet.active {
+    background-color: #007bff;
+    transform: scale(1.2);
+}
+
+.gallery-bullet:hover {
+    background-color: #007bff;
+    transform: scale(1.1);
+}
+
+/* Dark mode styles for bullets */
+[data-theme="dark"] .gallery-bullet {
+    background-color: #555;
+}
+
+[data-theme="dark"] .gallery-bullet.active {
+    background-color: #00a8ff;
+}
+
+[data-theme="dark"] .gallery-bullet:hover {
+    background-color: #00a8ff;
 }
