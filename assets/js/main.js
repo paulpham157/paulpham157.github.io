@@ -356,7 +356,6 @@ const projectUrls = {
     'comartek': 'https://comartek.com',
     'edoosmart-app': 'assets/images/showcase/EdooSmartApp.jpeg',
     'berempah': 'assets/images/showcase/Berempah.jpeg',
-    'xeghep': 'https://xeghephanoimocchausonla.vn',
     'artisan': 'assets/images/showcase/ArtisanAura.jpeg',
     'duongminhthong': 'https://duongminhthong.vn/phap-ly-va-dau-tu-bds630653',
     'gcc': 'https://gccbusiness.com.au'
@@ -370,7 +369,6 @@ const projectTypes = {
     'comartek': 'iframe',
     'edoosmart-app': 'image',
     'berempah': 'image',
-    'xeghep': 'iframe',
     'artisan': 'image',
     'duongminhthong': 'iframe',
     'gcc': 'iframe'
@@ -383,9 +381,8 @@ const projectTitles = {
     'comartek': 'Comartek - IT Solutions Provider',
     'edoosmart-app': 'EdooSmart Mobile App',
     'berempah': 'Berempah Malaysian Restaurant',
-    'xeghep': 'Xe Ghép Hà Nội - Mộc Châu - Sơn La',
     'artisan': 'Artisan Aura Deco',
-    'duongminhthong': 'Dương Minh Thông - Bất Động Sản',
+    'duongminhthong': 'Dương Minh Thông - Pháp lý Bất Động Sản',
     'gcc': 'GCC Business - Business Solutions'
 };
 
