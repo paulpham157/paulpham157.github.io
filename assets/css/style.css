@@ -1237,3 +1237,230 @@ nav {
 [data-theme="dark"] .gallery-bullet:hover {
     background-color: #00a8ff;
 }
+
+/* Showcase Section */
+.showcase {
+    padding: 4rem 0;
+    background-color: var(--bg-secondary);
+}
+
+.showcase h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 5rem;
+    color: var(--text-primary);
+    position: relative;
+    z-index: 2;
+}
+
+.showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.showcase-item {
+    background: var(--bg-primary);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.showcase-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(var(--accent-color-rgb), 0.2);
+}
+
+.showcase-content {
+    padding: 1.5rem;
+}
+
+.showcase-header {
+    margin-bottom: 1rem;
+}
+
+.showcase-header h3 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.showcase-item:hover .showcase-header h3 {
+    color: var(--accent-color);
+}
+
+.showcase-description {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.view-more-btn {
+    background-color: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.view-more-btn:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-primary);
+}
+
+/* Showcase Modal */
+.showcase-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.showcase-modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+
+.showcase-modal .modal-content {
+    background: var(--bg-primary);
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.showcase-modal .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--bg-primary);
+    border-bottom: 1px solid rgba(var(--accent-color-rgb), 0.1);
+    z-index: 2;
+}
+
+.showcase-modal .modal-title {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.showcase-modal .modal-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+    z-index: 3;
+}
+
+.showcase-modal .modal-close:hover {
+    color: var(--accent-color);
+    transform: rotate(90deg);
+}
+
+.showcase-modal .modal-body {
+    flex: 1;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.showcase-modal .showcase-embed {
+    flex: 1;
+    margin: 0;
+    position: relative;
+}
+
+.showcase-modal .embed-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background: var(--bg-secondary);
+}
+
+.showcase-modal .embed-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.showcase-modal .embed-container iframe.loaded {
+    opacity: 1;
+}
+
+.showcase-modal .loading-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1;
+}
+
+.showcase-modal .modal-description {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+/* Dark theme adjustments */
+.dark-theme .showcase-modal .modal-content {
+    background: var(--bg-primary-dark);
+}
+
+.dark-theme .showcase-modal .modal-header {
+    background: var(--bg-primary-dark);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .showcase-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+    }
+
+    .showcase-modal .modal-header {
+        padding: 0.8rem 1.5rem;
+    }
+
+    .showcase-modal .modal-title {
+        font-size: 1.2rem;
+    }
+
+    .showcase-modal .modal-close {
+        font-size: 1.8rem;
+    }
+}
