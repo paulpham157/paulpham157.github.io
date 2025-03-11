@@ -241,8 +241,9 @@ document.addEventListener('DOMContentLoaded', function() {
             "EdooTech": {
                 images: [
                     'assets/images/timeline/7.1.edootech.jpg',
+                    'assets/images/timeline/7.2.binh-dan-hoc-ai.jpeg',
                 ],
-                description: 'Chúng tôi đi sâu vào nghiên cứu RAG. Ngoài học hỏi từ một số open source như Dify, BotPress... chúng tôi tự phát triển hệ thống RAG thông qua framework Langchain. Team không phân biệt Backend hay Frontend, mỗi người đều làm full-stack dưới sự hướng dẫn của 1 tiến sĩ Computer Science người Úc.'
+                description: 'Chúng tôi đi sâu vào nghiên cứu RAG. Ngoài học hỏi từ một số open source như Dify, BotPress... chúng tôi tự phát triển hệ thống RAG thông qua framework Langchain. Team không phân biệt Backend hay Frontend, mỗi người đều làm full-stack dưới sự hướng dẫn của 1 tiến sĩ Computer Science người Úc. Ngoài ra, trong năm 2024, tôi tham gia vào cộng đồng Bình Dân Học AI và hưởng ứng các phòng trào ở đây. Nhờ đó tôi có nhiêu hiểu biết về big data, cách các hệ thống vận hành từ raw data đến biểu diễn trực quan hoá và cuối cùng dẫn đến quyết định của con người.'
             },
             "Công ty cổ phần giải pháp thanh toán Việt Tín": {
                 images: [
