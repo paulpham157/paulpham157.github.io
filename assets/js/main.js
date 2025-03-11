@@ -83,6 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalVideo = modal.querySelector('.modal-video');
     const modalDetails = modal.querySelector('.modal-details');
     const closeButton = modal.querySelector('.modal-close');
+    let slideInterval; // Biến để theo dõi interval
+    let currentTimelineData; // Biến để lưu trữ dữ liệu timeline hiện tại
 
     // Thêm tooltips cho mỗi timeline item
     timelineItems.forEach(item => {
@@ -107,31 +109,33 @@ document.addEventListener('DOMContentLoaded', function() {
             const achievements = item.querySelector('.achievements').innerHTML;
             const date = item.querySelector('.timeline-date').textContent;
 
-            // Giả lập dữ liệu media (thay thế bằng dữ liệu thực tế sau)
-            const timelineData = getTimelineData(title);
+            currentTimelineData = getTimelineData(title);
+            currentImageIndex = 0;
 
             modalTitle.textContent = title;
             modalDetails.innerHTML = `
                 <p class="modal-date">${date}</p>
                 <p class="modal-position">${position}</p>
-                <div class="modal-achievements">
+                <div class="modal-archv">
                     ${achievements}
                 </div>
                 <div class="modal-description">
-                    ${timelineData.description || ''}
+                    ${currentTimelineData.description || ''}
                 </div>
             `;
 
-            // Hiển thị/ẩn media tùy thuộc vào dữ liệu có sẵn
-            if (timelineData.image) {
-                modalImage.src = timelineData.image;
+            // Hiển thị ảnh đầu tiên và bắt đầu slideshow
+            if (currentTimelineData.images && currentTimelineData.images.length > 0) {
+                showImage(0, currentTimelineData);
+                startSlideshow();
                 modalImage.style.display = 'block';
             } else {
                 modalImage.style.display = 'none';
             }
 
-            if (timelineData.video) {
-                modalVideo.querySelector('source').src = timelineData.video;
+            // Xử lý video
+            if (currentTimelineData.video) {
+                modalVideo.querySelector('source').src = currentTimelineData.video;
                 modalVideo.load();
                 modalVideo.style.display = 'block';
             } else {
@@ -139,14 +143,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             modal.classList.add('show');
-            document.body.style.overflow = 'hidden'; // Ngăn scroll khi modal mở
+            document.body.style.overflow = 'hidden';
         });
     });
 
     // Đóng modal
     closeButton.addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
+        if (e.target.classList.contains('gallery-prev')) {
+            e.stopPropagation();
+            stopSlideshow(); // Dừng slideshow khi người dùng điều hướng thủ công
+            showImage(currentImageIndex - 1, currentTimelineData);
+        } else if (e.target.classList.contains('gallery-next')) {
+            e.stopPropagation();
+            stopSlideshow(); // Dừng slideshow khi người dùng điều hướng thủ công
+            showImage(currentImageIndex + 1, currentTimelineData);
+        } else if (e.target === modal) {
             closeModal();
         }
     });
@@ -162,28 +174,133 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.classList.remove('show');
         document.body.style.overflow = ''; // Khôi phục scroll
         modalVideo.pause(); // Dừng video nếu đang phát
+        stopSlideshow(); // Dừng slideshow khi đóng modal
     }
+
+    // Hàm bắt đầu slideshow
+    function startSlideshow() {
+        stopSlideshow(); // Dừng slideshow hiện tại nếu có
+        if (currentTimelineData.images && currentTimelineData.images.length > 1) {
+            slideInterval = setInterval(() => {
+                showImage(currentImageIndex + 1, currentTimelineData);
+            }, 3000);
+        }
+    }
+
+    // Hàm dừng slideshow
+    function stopSlideshow() {
+        if (slideInterval) {
+            clearInterval(slideInterval);
+            slideInterval = null;
+        }
+    }
+
+    // Thêm sự kiện hover cho modal-image
+    modalImage.addEventListener('mouseenter', stopSlideshow);
+    modalImage.addEventListener('mouseleave', startSlideshow);
 
     // Hàm giả lập dữ liệu timeline (thay thế bằng dữ liệu thực tế sau)
     function getTimelineData(title) {
         const data = {
             'Samsung Vietnam Mobile Center (SVMC)': {
-                image: 'assets/images/timeline/svmc.jpg',
-                video: 'assets/videos/timeline/svmc.mp4',
-                description: 'Trải nghiệm làm việc tại một trong những trung tâm nghiên cứu và phát triển lớn nhất của Samsung tại Việt Nam.'
+                images: [
+                    'assets/images/timeline/1.1.svmc-thi-tuyen.png',
+                    'assets/images/timeline/1.2.svmc-thuc-tap.png',
+                ],
+                description: 'Trải nghiệm làm việc tại một trong những trung tâm nghiên cứu và phát triển lớn nhất của Samsung tại Việt Nam. Đặt cột mốc cho cái nhìn đầu tiên của tôi về ngành phát triển phần mềm.'
             },
-            'Comartek': {
-                image: 'assets/images/timeline/comartek.jpg',
-                video: 'assets/videos/timeline/comartek.mp4',
-                description: 'Phát triển kỹ năng toàn diện trong vai trò IT Helpdesk và Web Developer.'
+            'Đại học Công nghiệp Hà Nội': {
+                images: [
+                    'assets/images/timeline/2.1.bao-cao-tot-nghiep.png',
+                    'assets/images/timeline/2.2.tot-nghiep.jpg',
+                    'assets/images/timeline/2.3.tot-nghiep.jpg',
+                ],
+                description: 'Đại học là quãng thời gian khá dài cho những kiến thức hàn lâm. Tuy không phải là chuyên ngành lập trình phần mềm nhưng những môn học như toán cao cấp, lập trình nhúng, điều khiển tự động hoá... khiến tôi nhận ra rằng cần kiên trì học hỏi và tìm tòi thì mới có kết quả. Từ đó, xây dựng cho tôi nền tảng về kỹ năng mà tôi cho là tốt nhất trong tất cả các kỹ năng: "Kỹ năng tự học".'
             },
-            'EdooSmart': {
-                image: 'assets/images/timeline/edoosmart.jpg',
-                video: 'assets/videos/timeline/edoosmart.mp4',
-                description: 'Khám phá và phát triển các ứng dụng AI trong giáo dục.'
-            }
-            // Thêm dữ liệu cho các mốc thời gian khác
+            "Khám phá IKIGAI bản thân": {
+                images: [
+                    'assets/images/timeline/',
+                ],
+                description: ''
+            },
+            "Comartek": {
+                images: [
+                    'assets/images/timeline/',
+                ],
+                description: ''
+            },
+            "EdooSmart": {
+                images: [
+                    'assets/images/timeline/',
+                ],
+                description: ''
+            },
+            "Công ty cổ phần giải pháp thanh toán Việt Tín": {
+                images: [
+                    'assets/images/timeline/',
+                ],
+                description: ''
+            },
+            "EdooTech": {
+                images: [
+                    'assets/images/timeline/',
+                ],
+                description: ''
+            },
+            "EdooSmart": {
+                images: [
+                    'assets/images/timeline/',
+                ],
+                description: ''
+            },
         };
         return data[title] || {};
+    }
+
+    // Thêm biến để theo dõi gallery
+    let currentImageIndex = 0;
+
+    // Hàm hiển thị ảnh trong gallery
+    function showImage(index, timelineData) {
+        const images = timelineData.images || [];
+        if (images.length === 0) return;
+
+        // Đảm bảo index nằm trong khoảng hợp lệ
+        currentImageIndex = (index + images.length) % images.length;
+        modalImage.src = images[currentImageIndex];
+
+        // Tạo hoặc cập nhật container cho bullets
+        let bulletContainer = modal.querySelector('.gallery-bullets');
+        if (!bulletContainer) {
+            bulletContainer = document.createElement('div');
+            bulletContainer.className = 'gallery-bullets';
+            modalImage.insertAdjacentElement('afterend', bulletContainer);
+        }
+
+        // Cập nhật bullets
+        bulletContainer.innerHTML = '';
+        images.forEach((_, idx) => {
+            const bullet = document.createElement('span');
+            bullet.className = `gallery-bullet ${idx === currentImageIndex ? 'active' : ''}`;
+            bullet.addEventListener('click', () => {
+                stopSlideshow();
+                showImage(idx, currentTimelineData);
+            });
+            bulletContainer.appendChild(bullet);
+        });
+
+        // Cập nhật UI của gallery
+        const galleryIndicator = modal.querySelector('.gallery-indicator');
+        if (galleryIndicator) {
+            galleryIndicator.textContent = `${currentImageIndex + 1}/${images.length}`;
+        }
+
+        // Hiển thị/ẩn nút điều hướng
+        const prevBtn = modal.querySelector('.gallery-prev');
+        const nextBtn = modal.querySelector('.gallery-next');
+        if (prevBtn && nextBtn) {
+            prevBtn.style.display = images.length > 1 ? 'block' : 'none';
+            nextBtn.style.display = images.length > 1 ? 'block' : 'none';
+        }
     }
 });
