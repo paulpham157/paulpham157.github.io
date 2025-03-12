@@ -90,7 +90,8 @@ class TechSphere {
         this.tooltip.className = 'tech-tooltip';
         document.body.appendChild(this.tooltip);
         this.radius = 150;
-        this.isRotating = false; // Tắt chế độ tự quay mặc định
+        this.isRotating = false; // Giữ nguyên giá trị false
+        this.autoRotate = false; // Thêm biến mới để kiểm soát
         this.animationFrameId = null; // Thêm biến quản lý animation frame
         
         this.init();
@@ -131,13 +132,14 @@ class TechSphere {
         const ambientLight = new THREE.AmbientLight(0x404040);
         this.scene.add(ambientLight);
 
-        // Thêm sự kiện hover cho container
+        // Xóa sự kiện mouseenter và mouseleave
         container.addEventListener('mouseenter', () => {
-            this.isRotating = false;
+            this.controls.enableDamping = true;
+            this.autoRotate = false;
         });
         
         container.addEventListener('mouseleave', () => {
-            this.isRotating = true;
+            this.autoRotate = false;
         });
 
         window.addEventListener('resize', () => {
@@ -220,13 +222,11 @@ class TechSphere {
         }
         
         // Chỉ cập nhật khi có thay đổi
-        if (this.isRotating || this.controls.enabled) {
-            if (this.isRotating) {
-                this.scene.rotation.y += 0.0005;
-            }
-            this.controls.update();
-            this.renderer.render(this.scene, this.camera);
+        if (this.autoRotate) {
+            this.scene.rotation.y += 0.0005;
         }
+        this.controls.update();
+        this.renderer.render(this.scene, this.camera);
     }
 
     onMouseMove(event) {

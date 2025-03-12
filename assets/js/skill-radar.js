@@ -2,16 +2,17 @@ class SkillRadar {
     constructor() {
         this.data = {
             labels: [
-                'Development (137)',
-                'Research (66)',
-                'Management (29)',
-                'Automation (13)',
-                'Social, Marketplace (10)',
+                'Development',
+                'Research',
+                'Automation',
+                'Management',
+                'Marketplace',
+                'Social'
             ],
             datasets: [
                 {
-                    label: 'Stack',
-                    data: [137, 66, 29, 13, 10],
+                    label: 'Skill Level',
+                    data: [95, 95, 88, 70, 65, 45],
                     fill: true,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgb(54, 162, 235)',
