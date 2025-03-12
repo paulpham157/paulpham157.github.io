@@ -229,93 +229,116 @@ nav {
 
 /* Tech Stack Section */
 .tech-stack {
-    padding: 4rem 0;
-    text-align: center;
-    background-color: var(--bg-secondary);
     position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    background: var(--bg-color);
     overflow: hidden;
+    padding: 2rem 0;
 }
 
 .tech-stack h2 {
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    color: var(--text-primary);
-}
-
-.tech-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 1.5rem;
-    justify-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    position: relative;
-}
-
-.tech-item {
-    width: 120px;
-    height: 120px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    padding: 1rem;
-    background-color: var(--bg-primary);
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeIn 0.5s ease forwards;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.tech-item.hidden {
-    display: none;
-}
-
-.tech-item i {
-    font-size: 2rem;
-    margin-bottom: 0.8rem;
-    color: var(--accent-color);
-    transition: transform 0.3s ease;
-}
-
-.tech-item span {
-    font-size: 0.85rem;
     text-align: center;
-    color: var(--text-secondary);
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    line-height: 1.2;
-    word-wrap: break-word;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+    position: relative;
+    z-index: 2;
 }
 
-.tech-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(var(--accent-color-rgb), 0.2);
+.tech-sphere-container {
+    width: 100%;
+    height: calc(100% - 100px);
+    position: relative;
 }
 
-.tech-item:hover i {
-    transform: scale(1.2);
-    color: var(--accent-color);
+.tech-sphere-container canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.tech-legend {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(var(--bg-color-rgb), 0.8);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.legend-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.legend-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.legend-item:hover {
+    opacity: 0.8;
+}
+
+.color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Màu cho các nhóm */
+.legend-item[data-group="Languages"] .color-dot { background: hsl(0, 100%, 50%); }
+.legend-item[data-group="Frontend"] .color-dot { background: hsl(51.4, 100%, 50%); }
+.legend-item[data-group="Backend"] .color-dot { background: hsl(102.8, 100%, 50%); }
+.legend-item[data-group="Database"] .color-dot { background: hsl(154.2, 100%, 50%); }
+.legend-item[data-group="DevOps"] .color-dot { background: hsl(205.6, 100%, 50%); }
+.legend-item[data-group="Testing"] .color-dot { background: hsl(257, 100%, 50%); }
+.legend-item[data-group="AI/ML"] .color-dot { background: hsl(308.4, 100%, 50%); }
+
+/* Tooltip cho nodes */
+.tech-tooltip {
+    position: fixed;
+    padding: 8px 12px;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tech-legend {
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        padding: 10px;
+    }
+
+    .legend-items {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
 }
 
 /* Load More Container */
@@ -1604,4 +1627,31 @@ nav {
     .demo-info {
         padding: 1rem;
     }
+}
+
+.tech-stack-counts {
+    display: flex; /* Sử dụng flexbox để dễ dàng sắp xếp các thẻ */
+    flex-wrap: wrap; /* Cho phép các thẻ xuống dòng nếu không đủ chỗ */
+    gap: 10px; /* Khoảng cách giữa các thẻ */
+    margin: auto;
+    margin-bottom: 35px;
+    justify-content: center;
+    max-width: 70%;
+}
+
+.tech-stack-counts .tag {
+    display: inline-block; /* Hiển thị như thẻ */
+    font-size: 0.8em;
+    padding: 5px 10px; /* Tạo khoảng cách bên trong thẻ */
+    background-color: #f5f5f5; /* Màu nền nhạt */
+    border-radius: 20px; /* Bo góc để trông như thẻ */
+    color: #333; /* Màu chữ */
+    border: 1px solid #ddd; /* Đường viền nhạt */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    transition: background-color 0.3s, color 0.3s; /* Hiệu ứng chuyển màu */
+}
+
+.tech-stack-counts .tag:hover {
+    background-color: #e0e0e0; /* Màu nền khi hover */
+    color: #000; /* Màu chữ khi hover */
 }
