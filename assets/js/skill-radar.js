@@ -79,7 +79,13 @@ class SkillRadar {
                 }
             }
         };
-
+        
+        this.chart = null;
+        this.isVisible = true;
+        this.observer = null;
+        this.container = null;
+        this.canvas = null;
+        
         this.init();
     }
 
@@ -119,8 +125,9 @@ class SkillRadar {
         wrapper.appendChild(techSphereContainer);
         wrapper.appendChild(container);
 
-        const canvas = document.createElement('canvas');
-        container.appendChild(canvas);
+        this.container = container;
+        this.canvas = document.createElement('canvas');
+        container.appendChild(this.canvas);
 
         // Thêm chú thích
         const legend = document.createElement('div');
@@ -132,7 +139,45 @@ class SkillRadar {
         `;
         container.appendChild(legend);
 
-        new Chart(canvas, this.config);
+        // Thêm Intersection Observer
+        this.observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                this.isVisible = entry.isIntersecting;
+                this.handleVisibilityChange();
+            });
+        }, { threshold: 0.1 });
+
+        this.observer.observe(this.container);
+
+        this.createChart();
+    }
+
+    createChart() {
+        if (this.chart) {
+            this.chart.destroy();
+        }
+        this.chart = new Chart(this.canvas, this.config);
+    }
+
+    handleVisibilityChange() {
+        if (!this.isVisible) {
+            this.destroyChart();
+        } else {
+            this.createChart();
+        }
+    }
+
+    destroyChart() {
+        if (this.chart) {
+            this.chart.destroy();
+            this.chart = null;
+        }
+    }
+
+    destroy() {
+        this.destroyChart();
+        this.observer.disconnect();
+        this.container.remove();
     }
 
     calculateTotal() {
@@ -142,5 +187,7 @@ class SkillRadar {
 
 // Khởi tạo khi trang đã load
 window.addEventListener('DOMContentLoaded', () => {
-    new SkillRadar();
+    const skillRadar = new SkillRadar();
+    // Thêm sự kiện cleanup khi cần
+    window.skillRadarInstance = skillRadar;
 });

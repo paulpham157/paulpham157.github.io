@@ -1624,7 +1624,7 @@ nav {
 
 .demo-preview.large .embed-container {
     width: 100%;
-    height: 100%;
+    height: 80vh;
 }
 
 .demo-info h3 a {
