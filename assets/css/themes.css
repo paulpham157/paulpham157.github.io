@@ -16,6 +16,10 @@
 
 /* Theme Colors */
 .light-theme {
+    --primary-color: #007bff; /* Màu xanh dương */
+    --secondary-color: #0056b3; /* Màu xanh dương đậm hơn khi hover */
+    --light-color: #fff; /* Màu trắng cho chữ sáng */
+    --dark-color: #333; /* Màu tối cho chữ tối */
     --bg-color: #ffffff;
     --text-color: #1a1a1a;
     --border-color: #e0e0e0;
@@ -23,6 +27,10 @@
 }
 
 .dark-theme {
+    --primary-color: #61dafb; /* Màu xanh da trời nhạt hơn cho dark theme */
+    --secondary-color: #38a1b7; /* Màu xanh da trời đậm hơn khi hover trong dark theme */
+    --light-color: #f0f0f0; /* Màu xám nhạt cho chữ sáng trong dark theme */
+    --dark-color: #ccc; /* Màu xám đậm hơn cho chữ tối trong dark theme */
     --bg-color: #1a1a1a;
     --text-color: #ffffff;
     --border-color: #333333;

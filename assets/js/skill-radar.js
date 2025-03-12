@@ -1,0 +1,145 @@
+class SkillRadar {
+    constructor() {
+        this.data = {
+            labels: [
+                'Development (137)',
+                'Research (66)',
+                'Management (29)',
+                'Automation (13)',
+                'Social, Marketplace (10)',
+            ],
+            datasets: [
+                {
+                    label: 'Stack',
+                    data: [137, 66, 29, 13, 10],
+                    fill: true,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgb(54, 162, 235)',
+                    pointBackgroundColor: 'rgb(54, 162, 235)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(54, 162, 235)'
+                }
+            ]
+        };
+
+        this.config = {
+            type: 'radar',
+            data: this.data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                elements: {
+                    line: {
+                        borderWidth: 3
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: true,
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        pointLabels: {
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 80,
+                        ticks: {
+                            stepSize: 20,
+                            font: {
+                                size: 10
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: ${context.raw}`;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        this.init();
+    }
+
+    init() {
+        const techSphereContainer = document.querySelector('.tech-sphere-container');
+        const container = document.createElement('div');
+        container.className = 'skill-radar-container';
+        container.style.cssText = `
+            width: 50%;
+            height: 400px;
+            margin-left: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        `;
+
+        const wrapper = document.createElement('div');
+        wrapper.style.cssText = `
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin: 0 auto;
+            max-width: 1240px;
+            height: 400px;
+            flex-direction: row;
+        `;
+
+        techSphereContainer.style.cssText = `
+            width: 50%;
+            height: 400px;
+        `;
+
+        techSphereContainer.parentNode.insertBefore(wrapper, techSphereContainer);
+        wrapper.appendChild(techSphereContainer);
+        wrapper.appendChild(container);
+
+        const canvas = document.createElement('canvas');
+        container.appendChild(canvas);
+
+        // Thêm chú thích
+        const legend = document.createElement('div');
+        legend.style.cssText = `
+            margin-top: 15px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        `;
+        container.appendChild(legend);
+
+        new Chart(canvas, this.config);
+    }
+
+    calculateTotal() {
+        return this.data.datasets[0].data.reduce((a, b) => a + b, 0);
+    }
+}
+
+// Khởi tạo khi trang đã load
+window.addEventListener('DOMContentLoaded', () => {
+    new SkillRadar();
+});

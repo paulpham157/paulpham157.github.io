@@ -501,3 +501,19 @@ document.addEventListener('DOMContentLoaded', function() {
         embedContainer.innerHTML = ''; // Xóa nội dung khi đóng modal
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const trialButtons = document.querySelectorAll('.trial-button');
+
+    trialButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const demoId = this.getAttribute('data-demo');
+            const demoIframeContainer = document.getElementById(demoId);
+
+            if (demoIframeContainer) {
+                demoIframeContainer.style.display = 'block'; // Hiển thị iframe container
+                this.style.display = 'none'; // Ẩn nút "Dùng thử" sau khi nhấp (tùy chọn)
+            }
+        });
+    });
+});

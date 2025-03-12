@@ -114,3 +114,13 @@
 .dark-theme .section-title::after {
     background-color: var(--accent-color);
 }
+
+@media (max-width: 768px) {
+    .tech-sphere-container {
+        display: none;
+    }
+    .skill-radar-container {
+        width: 100% !important;
+        margin: 10px !important;
+    }
+} 
