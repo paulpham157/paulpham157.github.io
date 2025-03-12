@@ -22,50 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     handleTimelineAnimation();
 });
 
-// Tech Stack Load More
-document.addEventListener('DOMContentLoaded', function() {
-    const techGrid = document.querySelector('.tech-grid');
-    const loadMoreBtn = document.querySelector('.load-more-btn');
-    const itemsPerLoad = 12; // Số lượng items hiển thị mỗi lần
-    let currentlyShown = 0;
-
-    // Ẩn tất cả các tech items ban đầu
-    const techItems = Array.from(techGrid.children);
-    techItems.forEach((item, index) => {
-        if (index >= itemsPerLoad) {
-            item.classList.add('hidden');
-        }
-    });
-
-    currentlyShown = Math.min(itemsPerLoad, techItems.length);
-
-    // Cập nhật trạng thái nút "Xem thêm"
-    function updateLoadMoreButton() {
-        if (currentlyShown >= techItems.length) {
-            loadMoreBtn.style.display = 'none';
-        } else {
-            loadMoreBtn.style.display = 'inline-flex';
-        }
-    }
-
-    // Xử lý sự kiện click nút "Xem thêm"
-    loadMoreBtn.addEventListener('click', function() {
-        const hiddenItems = techItems.slice(currentlyShown, currentlyShown + itemsPerLoad);
-        
-        hiddenItems.forEach((item, index) => {
-            setTimeout(() => {
-                item.classList.remove('hidden');
-            }, index * 100); // Thêm delay để tạo hiệu ứng
-        });
-
-        currentlyShown += hiddenItems.length;
-        updateLoadMoreButton();
-    });
-
-    // Khởi tạo trạng thái ban đầu của nút
-    updateLoadMoreButton();
-});
-
 // Tính tuổi dựa trên năm sinh 1996
 document.addEventListener('DOMContentLoaded', function() {
     const birthYear = 1996;
@@ -351,14 +307,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Showcase Modal Handling
 const projectUrls = {
     'edoosmart': 'assets/images/showcase/EdooSmart.jpeg',
-    'edoosmart-practice': 'https://practice.edoosmart.com',
-    'woywoy': 'https://woywoystaycation.com.au',
-    'comartek': 'https://comartek.com',
+    'edoosmart-practice': 'assets/images/showcase/EdoosmarPractice.png',
+    'woywoy': 'assets/images/showcase/WoyWoyStaycation.png',
+    'comartek': 'assets/images/showcase/Comartek.jpeg',
     'edoosmart-app': 'assets/images/showcase/EdooSmartApp.jpeg',
     'berempah': 'assets/images/showcase/Berempah.jpeg',
     'artisan': 'assets/images/showcase/ArtisanAura.jpeg',
     'duongminhthong': 'https://duongminhthong.vn/phap-ly-va-dau-tu-bds630653',
-    'gcc': 'https://gccbusiness.com.au'
+    'gcc': 'assets/images/showcase/gcc.jpeg'
 };
 
 // Thêm object mới để xác định loại nội dung (image hoặc iframe)
@@ -366,12 +322,12 @@ const projectTypes = {
     'edoosmart': 'image',
     'edoosmart-practice': 'iframe',
     'woywoy': 'iframe',
-    'comartek': 'iframe',
+    'comartek': 'image',
     'edoosmart-app': 'image',
     'berempah': 'image',
     'artisan': 'image',
     'duongminhthong': 'iframe',
-    'gcc': 'iframe'
+    'gcc': 'image'
 };
 
 const projectTitles = {
