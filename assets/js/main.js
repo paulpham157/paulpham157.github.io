@@ -675,3 +675,64 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Hobbies Lightbox
+document.addEventListener('DOMContentLoaded', function() {
+    const hobbyItems = document.querySelectorAll('.hobby-item');
+    const hobbyLightbox = document.getElementById('hobby-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxClose = document.querySelector('.lightbox-close');
+    
+    // Xử lý khi click vào hobby item
+    hobbyItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const imgSrc = this.querySelector('.hobby-image').getAttribute('src');
+            const title = this.querySelector('.hobby-description h3').textContent;
+            const description = this.querySelector('.hobby-description p').textContent;
+            
+            // Hiển thị hình ảnh trong lightbox
+            lightboxImg.setAttribute('src', imgSrc);
+            
+            // Cập nhật caption
+            lightboxCaption.innerHTML = `<h3>${title}</h3><p>${description}</p>`;
+            
+            // Hiển thị lightbox
+            hobbyLightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Preload ảnh để có animation mượt
+            const preloadImg = new Image();
+            preloadImg.src = imgSrc;
+        });
+    });
+    
+    // Xử lý đóng lightbox
+    if (lightboxClose) {
+        lightboxClose.addEventListener('click', closeLightbox);
+    }
+    
+    // Đóng lightbox khi click vào nền
+    if (hobbyLightbox) {
+        hobbyLightbox.addEventListener('click', function(e) {
+            if (e.target === hobbyLightbox) {
+                closeLightbox();
+            }
+        });
+    }
+    
+    // Xử lý phím ESC để đóng lightbox
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && hobbyLightbox && hobbyLightbox.classList.contains('active')) {
+            closeLightbox();
+        }
+    });
+    
+    // Hàm đóng lightbox
+    function closeLightbox() {
+        if (hobbyLightbox) {
+            hobbyLightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+});

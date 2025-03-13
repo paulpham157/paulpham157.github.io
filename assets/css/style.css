@@ -2296,3 +2296,164 @@ nav {
 .text-info {
     color: #17a2b8; /* Màu xanh ngọc */
 }
+
+/* Hobbies Section */
+.hobbies {
+    padding: 60px 0;
+    background: linear-gradient(135deg, var(--bg-color), var(--bg-color-secondary));
+    position: relative;
+}
+
+.hobbies h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--text-color);
+    font-size: 2.5rem;
+}
+
+.hobbies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 0 30px;
+}
+
+.hobby-item {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.hobby-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.hobby-image-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 75%; /* Tỷ lệ 4:3 */
+}
+
+.hobby-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.hobby-item:hover .hobby-image {
+    transform: scale(1.05);
+}
+
+.hobby-description {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.hobby-description h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.hobby-description p {
+    margin: 0;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Lightbox */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    overflow: auto;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1002;
+    transition: all 0.3s ease;
+}
+
+.lightbox-close:hover {
+    color: var(--primary-color);
+    transform: rotate(90deg);
+}
+
+.lightbox-content {
+    max-width: 90%;
+    max-height: 80vh;
+    object-fit: contain;
+    border: 3px solid white;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    animation: fadeIn 0.5s ease;
+}
+
+#lightbox-caption {
+    color: white;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    max-width: 80%;
+    line-height: 1.5;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive cho phần hobbies */
+@media (max-width: 1024px) {
+    .hobbies-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .hobbies-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .lightbox-content {
+        max-width: 95%;
+    }
+    
+    #lightbox-caption {
+        font-size: 16px;
+        max-width: 90%;
+    }
+}
