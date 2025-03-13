@@ -1552,11 +1552,44 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 10% 20%, 
-                               rgba(var(--primary-color-rgb), 0.05) 0%, 
-                               rgba(var(--accent-color-rgb), 0.03) 70%,
-                               transparent 100%);
+    background: 
+        radial-gradient(circle at 20% 30%, 
+            rgba(var(--primary-color-rgb), 0.15) 0%, 
+            rgba(var(--accent-color-rgb), 0.08) 50%,
+            transparent 80%),
+        radial-gradient(circle at 80% 70%, 
+            rgba(var(--accent-color-rgb), 0.12) 0%, 
+            rgba(var(--primary-color-rgb), 0.05) 60%,
+            transparent 90%);
     z-index: 0;
+}
+
+/* Thêm hiệu ứng động cho background */
+.demo::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,0.05) 0%, transparent 15%),
+        radial-gradient(circle at 30% 40%, rgba(255,255,255,0.03) 0%, transparent 20%),
+        radial-gradient(circle at 50% 60%, rgba(255,255,255,0.03) 0%, transparent 25%),
+        radial-gradient(circle at 70% 30%, rgba(255,255,255,0.03) 0%, transparent 22%),
+        radial-gradient(circle at 90% 80%, rgba(255,255,255,0.03) 0%, transparent 18%);
+    animation: bgShift 30s ease-in-out infinite alternate;
+    opacity: 0.7;
+    z-index: 0;
+}
+
+@keyframes bgShift {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
 }
 
 .demo h2 {
@@ -1583,12 +1616,13 @@ nav {
     gap: 2rem;
     align-items: center;
     background: linear-gradient(135deg, var(--bg-color), var(--bg-color-secondary));
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.05);
     padding: 2rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 12px; /* Thêm border-radius cho mềm mại hơn */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: 16px;
     position: relative;
     overflow: hidden;
+    border: 1px solid rgba(var(--primary-color-rgb), 0.1);
 }
 
 .demo-item::before {
@@ -1598,9 +1632,11 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.1), rgba(var(--accent-color-rgb), 0.05));
+    background: linear-gradient(135deg, 
+        rgba(var(--primary-color-rgb), 0.1), 
+        rgba(var(--accent-color-rgb), 0.05));
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
     z-index: 0;
     pointer-events: none;
 }
@@ -1610,8 +1646,9 @@ nav {
 }
 
 .demo-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15), 0 8px 15px rgba(0, 0, 0, 0.08);
+    border-color: rgba(var(--primary-color-rgb), 0.2);
 }
 
 .demo-item.right {
@@ -1625,39 +1662,72 @@ nav {
 .demo-preview {
     flex: 1;
     min-height: 400px;
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s ease;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #00b4d8, #03045e);
+    background: linear-gradient(135deg, 
+        rgba(var(--primary-color-rgb), 0.8), 
+        rgba(var(--accent-color-rgb), 0.7)),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="100%" height="100%" fill="none"/><path d="M40,40 L160,40 L160,160 L40,160 Z" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none" /></svg>'),
+        radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+    background-size: cover, 50px 50px, cover;
+    position: relative;
+}
+
+.demo-preview::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.2)" /></svg>');
+    background-size: 20px 20px;
+    opacity: 0.5;
+    animation: moveBg 60s linear infinite;
+    z-index: 1;
+    pointer-events: none;
+}
+
+@keyframes moveBg {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
 }
 
 .demo-preview:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
 }
 
 .demo-preview .trial-button {
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     color: white;
     border: none;
-    padding: 12px 20px;
+    padding: 14px 28px;
     border-radius: 30px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(var(--primary-color-rgb), 0.3);
+    box-shadow: 0 6px 15px rgba(var(--primary-color-rgb), 0.4);
     z-index: 10;
     font-size: 16px;
-    min-width: 150px;
-    letter-spacing: 0.5px;
+    min-width: 160px;
+    letter-spacing: 0.8px;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-transform: uppercase;
 }
 
 .demo-preview .trial-button::before {
@@ -1669,33 +1739,99 @@ nav {
     height: 100%;
     background: linear-gradient(90deg, 
         rgba(255, 255, 255, 0) 0%, 
-        rgba(255, 255, 255, 0.2) 50%, 
+        rgba(255, 255, 255, 0.3) 50%, 
         rgba(255, 255, 255, 0) 100%);
-    transition: left 0.7s ease;
+    transition: left 0.6s ease;
+}
+
+/* Thêm icon cho nút dùng thử */
+.demo-preview .trial-button::after {
+    content: '\f061'; /* Unicode cho biểu tượng arrow-right */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: 10px;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
 }
 
 .demo-preview .trial-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(var(--primary-color-rgb), 0.4);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(var(--primary-color-rgb), 0.5);
+    padding-right: 36px;
 }
 
 .demo-preview .trial-button:hover::before {
     left: 100%;
 }
 
-.demo-preview .trial-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(var(--primary-color-rgb), 0.3);
+.demo-preview .trial-button:hover::after {
+    opacity: 1;
+    transform: translateX(0);
 }
 
+.demo-preview .trial-button:active {
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* Cải thiện hiệu ứng cho nút Đóng demo */
+.demo-preview .trial-button.close-demo {
+    background: linear-gradient(135deg, #f44336, #d32f2f) !important;
+    box-shadow: 0 6px 15px rgba(244, 67, 54, 0.4);
+    transform: translateY(0);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    min-width: auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+}
+
+/* Reset biểu tượng arrow-right mặc định cho nút close-demo */
+.demo-preview .trial-button.close-demo::after {
+    content: '';
+    margin: 0;
+    opacity: 0;
+}
+
+.demo-preview .trial-button.close-demo:hover {
+    background: linear-gradient(135deg, #e53935, #c62828);
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(244, 67, 54, 0.5);
+    padding-right: 0;
+}
+
+.demo-preview .trial-button.close-demo:active {
+    transform: scale(0.95);
+    box-shadow: 0 4px 8px rgba(244, 67, 54, 0.4);
+}
+
+/* Hiệu ứng mở rộng khi iframe mở */
 .demo-preview .embed-container {
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    width: 100%;
     height: 0;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
     overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     margin-top: 20px;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.demo-preview .embed-container.active {
+    opacity: 1;
+    transform: scale(1);
+    height: auto;
 }
 
 .demo-preview iframe {
@@ -1705,6 +1841,67 @@ nav {
     width: 100%;
     height: 100%;
     border: none;
+    transform: scale(0.98);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.demo-preview .embed-container.active iframe {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* States cho trial button */
+.demo-preview .trial-button.loaded {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.demo-preview .trial-button.loaded:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.5);
+}
+
+/* Hiệu ứng đóng mượt mà cho iframe container */
+.demo-preview .embed-container {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.demo-preview .embed-container.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Hiệu ứng loading */
+.dots-animation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+}
+
+.loading-text {
+    color: white;
+    font-size: 14px;
+    margin-top: 10px;
+    letter-spacing: 1px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
 .demo-info {
@@ -1726,12 +1923,24 @@ nav {
 
 .demo-preview.large {
     width: 100%;
-    height: 600px;
+    min-height: 500px;
+    max-height: 700px;
+    transition: min-height 0.5s ease;
+    position: relative;
+}
+
+.demo-preview.large.expanded {
+    min-height: 700px;
 }
 
 .demo-preview.large .embed-container {
     width: 100%;
-    height: 80vh;
+    height: 100%;
+    padding-bottom: 0;
+}
+
+.demo-preview.large .embed-container.active {
+    min-height: 600px;
 }
 
 .demo-info h3 a {
@@ -1876,5 +2085,44 @@ nav {
     
     .footer-links a {
         margin: 0 0.75rem;
+    }
+}
+
+/* Nút dùng thử responsive */
+@media (max-width: 768px) {
+    .demo-preview .trial-button {
+        width: 100%;
+        max-width: 250px;
+        font-size: 14px;
+        padding: 12px 20px;
+    }
+    
+    .demo-preview .trial-button::after {
+        margin-left: 5px;
+    }
+    
+    .demo-preview .trial-button:hover {
+        padding-right: 28px;
+    }
+    
+    .demo-preview .trial-button.close-demo {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        padding: 0;
+        top: 10px;
+        left: 10px;
+    }
+    
+    .demo-preview .trial-button.close-demo:hover {
+        padding-right: 0;
+    }
+    
+    .demo-preview.large {
+        min-height: 400px;
+    }
+    
+    .demo-preview.large .embed-container.active {
+        min-height: 450px;
     }
 }
