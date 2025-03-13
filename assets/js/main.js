@@ -469,8 +469,42 @@ document.addEventListener('DOMContentLoaded', () => {
             const demoIframeContainer = document.getElementById(demoId);
 
             if (demoIframeContainer) {
-                demoIframeContainer.style.display = 'block'; // Hiển thị iframe container
-                this.style.display = 'none'; // Ẩn nút "Dùng thử" sau khi nhấp (tùy chọn)
+                // Hiển thị hiệu ứng loading trong button
+                this.innerHTML = `
+                    <div class="dots-animation" style="margin: 0;">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                `;
+                this.disabled = true;
+                
+                // Hiển thị iframe container
+                demoIframeContainer.style.display = 'block';
+                
+                // Lấy iframe trong container
+                const iframe = demoIframeContainer.querySelector('iframe');
+                
+                // Xử lý sự kiện khi iframe load xong
+                iframe.addEventListener('load', () => {
+                    // Sau khi iframe đã load xong, ẩn button với hiệu ứng mờ dần
+                    button.style.transition = 'opacity 0.5s ease';
+                    button.style.opacity = '0';
+                    
+                    // Sau khi hiệu ứng hoàn tất thì ẩn hẳn button
+                    setTimeout(() => {
+                        button.style.display = 'none';
+                    }, 500);
+                });
+                
+                // Timeout để tránh trường hợp iframe không load được
+                setTimeout(() => {
+                    if (button.style.display !== 'none') {
+                        button.innerHTML = 'Dùng thử';
+                        button.disabled = false;
+                        button.style.opacity = '1';
+                    }
+                }, 20000); // 20 giây timeout
             }
         });
     });
