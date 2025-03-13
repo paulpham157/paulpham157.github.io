@@ -2040,9 +2040,16 @@ nav {
     margin-top: auto;
 }
 
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 .main-footer .copyright {
     font-size: 0.9rem;
-    margin-bottom: 1rem;
+    margin: 0;
 }
 
 .footer-links a {
@@ -2058,7 +2065,6 @@ nav {
 
 .social-icons {
     display: flex;
-    justify-content: flex-end;
     gap: 1.5rem;
 }
 
@@ -2073,7 +2079,7 @@ nav {
 }
 
 @media (max-width: 768px) {
-    .main-footer .row {
+    .footer-content {
         flex-direction: column;
         text-align: center;
     }
