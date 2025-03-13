@@ -2457,3 +2457,23 @@ nav {
         max-width: 90%;
     }
 }
+
+/* Thẻ nhãn dành cho doanh nghiệp */
+.business-tag {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 3px 8px;
+    background-color: #ff6b00;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 4px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.dark-theme .business-tag {
+    background-color: #ff9e00;
+    color: #333;
+}

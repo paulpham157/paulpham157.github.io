@@ -7,7 +7,7 @@ const techGroups = {
         'Vue.js', 'Vite', 'Express.js', 'Nest.js', 'Adonis.js', 'Django', 'Electron', 'Flutter', 
         'React Native', 'TensorFlow', 'PyTorch', 'OpenCV', 'NumPy', 'Transformers', 'Scikit-learn', 
         'Pandas', 'SciPy', 'Keras', 'FastAPI', 'Flask', 'Strawberry GraphQL', 'Celery', 'RabbitMQ', 
-        'LangChain', 'LlamaIndex', 'Amazon Bedrock', 'Three.js'
+        'LangChain', 'LlamaIndex', 'Amazon Bedrock', 'Three.js', 'InertiaJS', 'Svelte'
     ],
     'Database & Storage': [
         'SQLite', 'MySQL', 'PostgreSQL', 'SQL Server', 'MariaDB', 'MongoDB', 'Redis',
