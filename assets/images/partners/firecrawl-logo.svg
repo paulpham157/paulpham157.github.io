@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" rx="20" fill="#FF5722"/>
+  <text x="100" y="130" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#FFFFFF">FireCrawl</text>
+  <path d="M100,50 C130,70 110,95 100,110 C90,95 70,70 100,50" fill="#FFFFFF"/>
+  <path d="M70,80 C50,90 60,120 85,120" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+  <path d="M130,80 C150,90 140,120 115,120" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+</svg> 

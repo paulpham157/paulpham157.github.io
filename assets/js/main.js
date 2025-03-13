@@ -621,3 +621,57 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// Partners Section
+document.addEventListener('DOMContentLoaded', function() {
+    const partnerItems = document.querySelectorAll('.partner-item');
+    
+    partnerItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            const logo = this.querySelector('.partner-logo');
+            logo.style.transform = 'scale(1.1)';
+            logo.style.transition = 'transform 0.3s ease';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            const logo = this.querySelector('.partner-logo');
+            logo.style.transform = 'scale(1)';
+        });
+        
+        // Add click event to copy coupon code to clipboard when clicked
+        const strongTags = item.querySelectorAll('strong');
+        strongTags.forEach(tag => {
+            tag.style.cursor = 'pointer';
+            tag.setAttribute('title', 'Bấm để sao chép mã');
+            
+            tag.addEventListener('click', function() {
+                const couponCode = this.textContent;
+                navigator.clipboard.writeText(couponCode)
+                    .then(() => {
+                        // Create and show notification
+                        const notification = document.createElement('div');
+                        notification.className = 'copy-notification';
+                        notification.textContent = 'Đã sao chép: ' + couponCode;
+                        
+                        document.body.appendChild(notification);
+                        
+                        // Position notification near the cursor
+                        const rect = this.getBoundingClientRect();
+                        notification.style.top = (rect.top + window.scrollY - 40) + 'px';
+                        notification.style.left = (rect.left + window.scrollX) + 'px';
+                        
+                        // Remove notification after 2 seconds
+                        setTimeout(() => {
+                            notification.style.opacity = '0';
+                            setTimeout(() => {
+                                document.body.removeChild(notification);
+                            }, 300);
+                        }, 2000);
+                    })
+                    .catch(err => {
+                        console.error('Không thể sao chép mã: ', err);
+                    });
+            });
+        });
+    });
+});
