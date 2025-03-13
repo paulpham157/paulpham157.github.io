@@ -184,8 +184,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     'assets/images/timeline/4.1.comartek.jpg',
                     'assets/images/timeline/4.2.comartek.jpg',
                     'assets/images/timeline/4.3.comartek.jpg',
-                    'assets/images/timeline/4.4.raspberrypi400.jpg',
-                    'assets/images/timeline/4.5.openwrt.jpg',
                 ],
                 description: 'Bắt đầu với vị trí IT Helpdesk, sau đó tôi kiêm nhiệm thêm công việc phát triển và triển khai các website outsourcing. Vị trí IT Helpdesk được tiếp xúc với rất nhiều người trong, ngoài công ty. Từ nhân viên, quản lý tới khách hàng, đối tác; đủ các vị trí vai trò Dev, Tester, DevOps, PM, BA, CTO, COO, CEO, HR, Acountant, Sales, Marketing... Có thể nói Comartek là công việc fulltime chính thức đầu tiên của tôi. Thời gian tiếp xúc với những con người ở đây đã cung cấp cho tôi một cái nhìn đa chiều, nhiều góc cạnh về các công việc, các giai đoạn xung quanh một dự án phần mềm. Từ ý tưởng đến khi ra sản phẩm và cần phải SEO như nào.'
             },
@@ -464,11 +462,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const trialButtons = document.querySelectorAll('.trial-button');
 
     trialButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        // Loại bỏ tất cả các event listener có thể tồn tại trước đó
+        const newButton = button.cloneNode(true);
+        button.parentNode.replaceChild(newButton, button);
+        
+        newButton.addEventListener('click', function handleButtonClick() {
             const demoId = this.getAttribute('data-demo');
             const demoIframeContainer = document.getElementById(demoId);
-
+            const demoPreview = this.closest('.demo-preview');
+            
+            // Kiểm tra xem nút đang ở trạng thái nào
+            if (this.classList.contains('close-demo')) {
+                // Đang ở trạng thái "Đóng demo" - thực hiện đóng iframe
+                demoIframeContainer.classList.remove('active');
+                
+                // Lưu giữ tham chiếu đến các phần tử
+                const currentButton = this;
+                const originalButtonText = demoId === 'demo-2' ? 
+                    'Dùng thử (các đối tượng 3D cần nhiều tài nguyên để tải, vui lòng chờ đợi ít phút sau khi nhấn)' : 
+                    'Dùng thử';
+                
+                // Sau khi animation kết thúc, ẩn container và khôi phục button
+                setTimeout(() => {
+                    demoIframeContainer.style.display = 'none';
+                    currentButton.innerHTML = originalButtonText;
+                    currentButton.classList.remove('loaded', 'close-demo');
+                    demoPreview.classList.remove('expanded');
+                }, 500);
+                
+                return; // Dừng thực thi sớm để không mở lại demo
+            }
+            
+            // Tiếp tục với hành vi mở demo bình thường nếu nút không ở trạng thái đóng
             if (demoIframeContainer) {
+                // Lưu lại text ban đầu của nút
+                const originalText = this.innerHTML;
+                
                 // Hiển thị hiệu ứng loading trong button
                 this.innerHTML = `
                     <div class="dots-animation" style="margin: 0;">
@@ -478,33 +507,116 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
                 this.disabled = true;
-                
-                // Hiển thị iframe container
-                demoIframeContainer.style.display = 'block';
-                
-                // Lấy iframe trong container
-                const iframe = demoIframeContainer.querySelector('iframe');
-                
-                // Xử lý sự kiện khi iframe load xong
-                iframe.addEventListener('load', () => {
-                    // Sau khi iframe đã load xong, ẩn button với hiệu ứng mờ dần
-                    button.style.transition = 'opacity 0.5s ease';
-                    button.style.opacity = '0';
-                    
-                    // Sau khi hiệu ứng hoàn tất thì ẩn hẳn button
-                    setTimeout(() => {
-                        button.style.display = 'none';
-                    }, 500);
-                });
-                
-                // Timeout để tránh trường hợp iframe không load được
+
+                // Hiệu ứng mở rộng section demo
+                if (demoPreview) {
+                    demoPreview.classList.add('expanded');
+                }
+
+                // Loại bỏ container loading cũ nếu có
+                const oldLoadingContainer = demoIframeContainer.querySelector('.dots-animation-container');
+                if (oldLoadingContainer) {
+                    oldLoadingContainer.remove();
+                }
+
+                // Thêm container loading cho iframe
+                const loadingContainer = document.createElement('div');
+                loadingContainer.className = 'dots-animation-container';
+                loadingContainer.innerHTML = `
+                    <div class="dots-animation">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="loading-text">Đang tải demo...</div>
+                `;
+                demoIframeContainer.appendChild(loadingContainer);
+
+                // Hiển thị container iframe với hiệu ứng
                 setTimeout(() => {
-                    if (button.style.display !== 'none') {
-                        button.innerHTML = 'Dùng thử';
-                        button.disabled = false;
-                        button.style.opacity = '1';
+                    demoIframeContainer.style.display = 'block';
+                    
+                    // Thêm class active sau delay nhỏ để có hiệu ứng animation
+                    setTimeout(() => {
+                        demoIframeContainer.classList.add('active');
+                    }, 50);
+                    
+                    // Lấy iframe trong container
+                    const iframe = demoIframeContainer.querySelector('iframe');
+                    
+                    // Đảm bảo iframe đã được tạo
+                    if (iframe) {
+                        // Xử lý sự kiện khi iframe đã tải xong
+                        iframe.addEventListener('load', function() {
+                            // Ẩn loading
+                            if (loadingContainer && loadingContainer.parentNode) {
+                                loadingContainer.remove();
+                            }
+                            
+                            // Khôi phục nút với văn bản và biểu tượng mới
+                            newButton.innerHTML = `Đã tải xong <i class="fas fa-check"></i>`;
+                            newButton.disabled = false;
+                            
+                            // Thêm class để hiển thị đã hoàn thành
+                            newButton.classList.add('loaded');
+                            
+                            // Sau 2 giây, bắt đầu chuyển cảnh sang nút đóng một cách mượt mà
+                            setTimeout(() => {
+                                // Bắt đầu hiệu ứng fade-out
+                                newButton.style.opacity = '0';
+                                
+                                // Sau khi fade out hoàn tất, thay đổi nội dung và bắt đầu thay đổi vị trí
+                                setTimeout(() => {
+                                    // Thay đổi nội dung nút
+                                    newButton.innerHTML = `<i class="fas fa-times"></i>`;
+                                    newButton.classList.add('close-demo');
+                                    
+                                    // Áp dụng transition cho thuộc tính transform và position
+                                    setTimeout(() => {
+                                        // Hiển thị nút với hiệu ứng fade-in ở vị trí mới
+                                        newButton.style.opacity = '1';
+                                    }, 50);
+                                }, 300);
+                            }, 2000);
+                        });
+
+                        // Xử lý trường hợp iframe không tải được sau 20 giây
+                        const timeoutId = setTimeout(() => {
+                            if (!iframe.classList.contains('loaded')) {
+                                if (loadingContainer && loadingContainer.parentNode) {
+                                    loadingContainer.innerHTML = `
+                                        <div class="loading-text" style="color: #ff5252;">
+                                            <i class="fas fa-exclamation-triangle"></i> 
+                                            Không thể tải demo. Vui lòng thử lại sau.
+                                        </div>
+                                    `;
+                                }
+                                
+                                newButton.innerHTML = originalText;
+                                newButton.disabled = false;
+                            }
+                        }, 20000);
+                        
+                        // Clear timeout khi iframe tải xong
+                        iframe.addEventListener('load', () => {
+                            clearTimeout(timeoutId);
+                            iframe.classList.add('loaded');
+                        });
+                    } else {
+                        // Xử lý trường hợp không tìm thấy iframe
+                        if (loadingContainer && loadingContainer.parentNode) {
+                            loadingContainer.innerHTML = `
+                                <div class="loading-text" style="color: #ff5252;">
+                                    <i class="fas fa-exclamation-triangle"></i> 
+                                    Có lỗi xảy ra. Vui lòng thử lại sau.
+                                </div>
+                            `;
+                        }
+                        
+                        newButton.innerHTML = originalText;
+                        newButton.disabled = false;
                     }
-                }, 20000); // 20 giây timeout
+                }, 800);
             }
         });
     });
