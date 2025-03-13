@@ -184,6 +184,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     'assets/images/timeline/4.1.comartek.jpg',
                     'assets/images/timeline/4.2.comartek.jpg',
                     'assets/images/timeline/4.3.comartek.jpg',
+                    'assets/images/timeline/4.4.raspberrypi400.jpg',
+                    'assets/images/timeline/4.5.openwrt.jpg',
                 ],
                 description: 'Bắt đầu với vị trí IT Helpdesk, sau đó tôi kiêm nhiệm thêm công việc phát triển và triển khai các website outsourcing. Vị trí IT Helpdesk được tiếp xúc với rất nhiều người trong, ngoài công ty. Từ nhân viên, quản lý tới khách hàng, đối tác; đủ các vị trí vai trò Dev, Tester, DevOps, PM, BA, CTO, COO, CEO, HR, Acountant, Sales, Marketing... Có thể nói Comartek là công việc fulltime chính thức đầu tiên của tôi. Thời gian tiếp xúc với những con người ở đây đã cung cấp cho tôi một cái nhìn đa chiều, nhiều góc cạnh về các công việc, các giai đoạn xung quanh một dự án phần mềm. Từ ý tưởng đến khi ra sản phẩm và cần phải SEO như nào.'
             },
