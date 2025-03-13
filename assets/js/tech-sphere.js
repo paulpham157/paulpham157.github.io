@@ -28,7 +28,7 @@ const techGroups = {
     ],
     'Package Managers': [
         'npm', 'Yarn', 'Conda', 'Bun', 'Homebrew', 'APT', 'Pacman', 'DPKG',
-        'RPM', 'YUM', 'APK', 'DNF', 'Maven', 'Chocolatey', 'WinGet'
+        'RPM', 'YUM', 'APK', 'DNF', 'Maven', 'Chocolatey', 'WinGet', 'PM2'
     ],
     'Cloud & Hosting': [
         'Amazon Web Services', 'GCP', 'Azure', 'Vultr', 'GoDaddy', 'CMC',
