@@ -90,22 +90,24 @@ class TechSphere {
         this.tooltip.className = 'tech-tooltip';
         document.body.appendChild(this.tooltip);
         this.radius = 150;
-        this.isRotating = false; // Giữ nguyên giá trị false
-        this.autoRotate = false; // Thêm biến mới để kiểm soát
-        this.animationFrameId = null; // Thêm biến quản lý animation frame
+        this.isRotating = false;
+        this.autoRotate = false;
+        this.animationFrameId = null;
+        this.isVisible = false;
+        this.isInitialized = false;
+        this.edgeDensity = 0.3;
         
-        this.init();
-        this.createNodes();
-        this.createEdges();
-        this.animate(); // Khởi động animation
-        this.updateTitle();
+        this.initContainer();
+        
+        this.setupScrollObserver();
     }
 
-    init() {
+    initContainer() {
         const container = document.querySelector('.tech-sphere-container');
-        // Giới hạn kích thước container
+        if (!container) return;
+        
         const maxWidth = Math.min(800, window.innerWidth * 0.8);
-        const aspectRatio = 0.75; // Tỷ lệ chiều cao/chiều rộng
+        const aspectRatio = 0.75;
         const height = maxWidth * aspectRatio;
         
         container.style.width = `${maxWidth}px`;
@@ -114,9 +116,66 @@ class TechSphere {
         container.style.border = '1px solid #ddd';
         container.style.borderRadius = '10px';
         container.style.overflow = 'hidden';
+        container.style.position = 'relative';
+        
+        const placeholder = document.createElement('div');
+        placeholder.className = 'tech-sphere-placeholder';
+        placeholder.innerHTML = `
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                <div class="dots-animation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <p>Đang tải dữ liệu...</p>
+            </div>
+        `;
+        container.appendChild(placeholder);
         
         this.renderer.setSize(maxWidth, height);
         this.renderer.setPixelRatio(window.devicePixelRatio);
+    }
+
+    setupScrollObserver() {
+        const options = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.isVisible = true;
+                    if (!this.isInitialized) {
+                        this.lazyInitialize();
+                    } else {
+                        this.startAnimation();
+                    }
+                } else {
+                    this.isVisible = false;
+                    this.stopAnimation();
+                }
+            });
+        }, options);
+        
+        const container = document.querySelector('.tech-sphere-container');
+        if (container) {
+            observer.observe(container);
+        }
+    }
+
+    lazyInitialize() {
+        if (this.isInitialized) return;
+        
+        const container = document.querySelector('.tech-sphere-container');
+        if (!container) return;
+        
+        const placeholder = container.querySelector('.tech-sphere-placeholder');
+        if (placeholder) {
+            placeholder.remove();
+        }
+        
         container.appendChild(this.renderer.domElement);
         
         this.camera.position.z = 250;
@@ -132,7 +191,6 @@ class TechSphere {
         const ambientLight = new THREE.AmbientLight(0x404040);
         this.scene.add(ambientLight);
 
-        // Xóa sự kiện mouseenter và mouseleave
         container.addEventListener('mouseenter', () => {
             this.controls.enableDamping = true;
             this.autoRotate = false;
@@ -142,24 +200,26 @@ class TechSphere {
             this.autoRotate = false;
         });
 
-        window.addEventListener('resize', () => {
-            const maxWidth = Math.min(800, window.innerWidth * 0.8);
-            const height = maxWidth * aspectRatio;
-            
-            container.style.width = `${maxWidth}px`;
-            container.style.height = `${height}px`;
-            
-            this.camera.aspect = maxWidth / height;
-            this.camera.updateProjectionMatrix();
-            this.renderer.setSize(maxWidth, height);
-        });
-
+        window.addEventListener('resize', () => this.onWindowResize());
         window.addEventListener('mousemove', (event) => this.onMouseMove(event));
+        
+        this.createNodes();
+        this.createEdges();
+        this.updateTitle();
+        
+        this.isInitialized = true;
+        this.startAnimation();
+    }
+
+    startAnimation() {
+        if (!this.animationFrameId && this.isVisible) {
+            this.animate();
+        }
     }
 
     createNodes() {
         Object.entries(techGroups).forEach(([groupName, technologies], groupIndex) => {
-            const groupColor = new THREE.Color().setHSL(0, 0, 0.5); // Màu xám
+            const groupColor = new THREE.Color().setHSL(0, 0, 0.5);
             this.groups[groupName] = {
                 color: groupColor,
                 nodes: []
@@ -173,7 +233,6 @@ class TechSphere {
                 const material = new THREE.MeshPhongMaterial({ color: groupColor, emissive: 0x333333, specular: 0x555555, shininess: 30 });
                 const node = new THREE.Mesh(geometry, material);
                 
-                // Vị trí trên sphere
                 const radius = this.radius;
                 node.position.x = radius * Math.sin(phi) * Math.cos(theta);
                 node.position.y = radius * Math.sin(phi) * Math.sin(theta);
@@ -189,10 +248,21 @@ class TechSphere {
     }
 
     createEdges() {
-        // Tạo edges giữa các node trong cùng nhóm
         Object.values(this.groups).forEach(group => {
-            for (let i = 0; i < group.nodes.length; i++) {
-                for (let j = i + 1; j < group.nodes.length; j++) {
+            const nodeCount = group.nodes.length;
+            
+            for (let i = 0; i < nodeCount; i++) {
+                const maxConnections = Math.max(2, Math.floor(nodeCount * this.edgeDensity / 5));
+                const connectedIndices = new Set();
+                
+                while (connectedIndices.size < maxConnections && connectedIndices.size < nodeCount - 1) {
+                    const randomIndex = Math.floor(Math.random() * nodeCount);
+                    if (randomIndex !== i) {
+                        connectedIndices.add(randomIndex);
+                    }
+                }
+                
+                connectedIndices.forEach(j => {
                     const nodeA = group.nodes[i];
                     const nodeB = group.nodes[j];
                     
@@ -204,32 +274,39 @@ class TechSphere {
                     const material = new THREE.LineBasicMaterial({
                         color: group.color,
                         transparent: true,
-                        opacity: 0.3
+                        opacity: 0.2
                     });
                     
                     const edge = new THREE.Line(geometry, material);
                     this.scene.add(edge);
                     this.edges.push(edge);
-                }
+                });
             }
         });
     }
 
     animate() {
-        // Chỉ request frame tiếp theo khi cần thiết
-        if (this.isRotating || this.controls.enabled) {
-            this.animationFrameId = requestAnimationFrame(() => this.animate());
+        if (!this.isVisible) {
+            this.animationFrameId = null;
+            return;
         }
         
-        // Chỉ cập nhật khi có thay đổi
+        this.animationFrameId = requestAnimationFrame(() => this.animate());
+        
         if (this.autoRotate) {
             this.scene.rotation.y += 0.0005;
         }
-        this.controls.update();
+        
+        if (this.controls) {
+            this.controls.update();
+        }
+        
         this.renderer.render(this.scene, this.camera);
     }
 
     onMouseMove(event) {
+        if (!this.isVisible || !this.isInitialized) return;
+        
         const container = document.querySelector('.tech-sphere-container');
         const rect = container.getBoundingClientRect();
         
@@ -249,10 +326,8 @@ class TechSphere {
             this.tooltip.style.top = `${event.clientY}px`;
             this.tooltip.textContent = `${intersected.userData.name} (${intersected.userData.group})`;
             
-            // Highlight node được hover
             intersected.material.emissive.setHex(0x666666);
             
-            // Reset các node khác
             this.nodes.forEach(node => {
                 if (node !== intersected) {
                     node.material.emissive.setHex(0x000000);
@@ -260,7 +335,6 @@ class TechSphere {
             });
         } else {
             this.tooltip.style.display = 'none';
-            // Reset tất cả nodes
             this.nodes.forEach(node => {
                 node.material.emissive.setHex(0x000000);
             });
@@ -274,7 +348,6 @@ class TechSphere {
             groupCounts += `<div class="tag">${groupName}: ${technologies.length}</div>`;
         });
         document.querySelector('.tech-stack h2').textContent = `Tech Stack (${totalTech})`;
-        // Thêm phần hiển thị số lượng mỗi nhóm
         const countElement = document.createElement('div');
         countElement.className = 'tech-stack-counts';
         countElement.style.fontSize = '0.8em';
@@ -286,17 +359,65 @@ class TechSphere {
         }
     }
 
-    // Thêm phương thức hủy animation khi không cần thiết
     stopAnimation() {
         if (this.animationFrameId) {
             cancelAnimationFrame(this.animationFrameId);
             this.animationFrameId = null;
         }
     }
+
+    onWindowResize() {
+        if (!this.isInitialized) return;
+        
+        const container = document.querySelector('.tech-sphere-container');
+        if (!container) return;
+        
+        const maxWidth = Math.min(800, window.innerWidth * 0.8);
+        const aspectRatio = 0.75;
+        const height = maxWidth * aspectRatio;
+        
+        container.style.width = `${maxWidth}px`;
+        container.style.height = `${height}px`;
+        
+        this.camera.aspect = maxWidth / height;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize(maxWidth, height);
+    }
+    
+    dispose() {
+        this.stopAnimation();
+        
+        window.removeEventListener('mousemove', this.onMouseMove);
+        window.removeEventListener('resize', this.onWindowResize);
+        
+        this.edges.forEach(edge => {
+            if (edge.geometry) edge.geometry.dispose();
+            if (edge.material) edge.material.dispose();
+            this.scene.remove(edge);
+        });
+        
+        this.nodes.forEach(node => {
+            if (node.geometry) node.geometry.dispose();
+            if (node.material) node.material.dispose();
+            this.scene.remove(node);
+        });
+        
+        if (this.renderer) {
+            this.renderer.domElement.remove();
+            this.renderer.dispose();
+        }
+        
+        if (this.tooltip) {
+            this.tooltip.remove();
+        }
+        
+        this.nodes = [];
+        this.edges = [];
+        this.groups = {};
+    }
 }
 
-// Khởi tạo khi trang đã load
+let techSphere = null;
 window.addEventListener('DOMContentLoaded', () => {
-    const techSphere = new TechSphere();
-    window.addEventListener('resize', () => techSphere.onWindowResize());
+    techSphere = new TechSphere();
 }); 
