@@ -320,8 +320,8 @@ const projectUrls = {
 // Thêm object mới để xác định loại nội dung (image hoặc iframe)
 const projectTypes = {
     'edoosmart': 'image',
-    'edoosmart-practice': 'iframe',
-    'woywoy': 'iframe',
+    'edoosmart-practice': 'image',
+    'woywoy': 'image',
     'comartek': 'image',
     'edoosmart-app': 'image',
     'berempah': 'image',
