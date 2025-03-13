@@ -11,7 +11,7 @@ class SkillRadar {
             ],
             datasets: [
                 {
-                    label: 'Skill Level',
+                    label: 'Points',
                     data: [95, 95, 88, 70, 65, 45],
                     fill: true,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
