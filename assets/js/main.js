@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ],
                 description: 'Với vai trò Automation Test Engineer tại phòng IT, tôi đã xây dựng và triển khai các giải pháp tự động hóa kiểm thử toàn diện sử dụng đa dạng công nghệ như Selenium, Appium, Postman và CodeceptJS kết hợp với Jenkins tạo luồng CI/CD tự động kiểm thử trên macbook, android, ios mỗi ngày. Song song với việc tối ưu quy trình kiểm thử, tôi còn đảm nhiệm quản lý hạ tầng mạng và cung cấp giải pháp công nghệ cho các phòng ban khác trong công ty. Đặc biệt trong năm 2024, tôi đã liên tục sharing các công cụ AI mà tôi đã tìm hiểu và đang sử dụng cho mọi người. Quý 3,4 năm 2024, tôi tham gia team AI, nghiên cứu và phát triển công nghệ AI tiên tiến vào các sản phẩm của công ty.'
             },
-            "EdooSmart (2025)": {
+            "": {
                 images: [
                     'assets/images/timeline/8.1.edoosmart.jpg',
                 ],
