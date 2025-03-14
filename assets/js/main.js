@@ -187,10 +187,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 ],
                 description: 'Bắt đầu với vị trí IT Helpdesk, sau đó tôi kiêm nhiệm thêm công việc phát triển và triển khai các website outsourcing. Vị trí IT Helpdesk được tiếp xúc với rất nhiều người trong, ngoài công ty. Từ nhân viên, quản lý tới khách hàng, đối tác; đủ các vị trí vai trò Dev, Tester, DevOps, PM, BA, CTO, COO, CEO, HR, Acountant, Sales, Marketing... Có thể nói Comartek là công việc fulltime chính thức đầu tiên của tôi. Thời gian tiếp xúc với những con người ở đây đã cung cấp cho tôi một cái nhìn đa chiều, nhiều góc cạnh về các công việc, các giai đoạn xung quanh một dự án phần mềm. Từ ý tưởng đến khi ra sản phẩm và cần phải SEO như nào.'
             },
-            "EdooSmart (2023-2024)": {
+            "EdooSmart": {
                 images: [
                     'assets/images/timeline/5.1.edoosmart.png',
                     'assets/images/timeline/5.2.edoosmart.png',
+                    'assets/images/timeline/5.3.edoosmart.png',
                 ],
                 description: 'EdooSmart là đơn vị tiên phong trong việc ứng dụng công nghệ để tối ưu hóa trải nghiệm học tập. Khởi đầu như một dự án freelance thông thường, tôi tập trung phát triển nền tảng web và hệ thống quản lý học tập. Tuy nhiên, sự xuất hiện và phát triển mạnh mẽ của ChatGPT vào cuối năm 2022, đầu năm 2023 đã mở ra một hướng đi mới đầy tiềm năng. Nhận thấy cơ hội to lớn trong việc tích hợp AI để nâng cao hiệu quả học tập, chúng tôi đã quyết định đầu tư nghiên cứu về các mô hình ngôn ngữ lớn (LLM) và trí tuệ nhân tạo. Đây chính là những bước đi đầu tiên trong hành trình khám phá AI nói chung và LLM nói riêng của tôi.'
             },
