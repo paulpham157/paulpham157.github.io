@@ -481,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Lưu giữ tham chiếu đến các phần tử
                 const currentButton = this;
                 const originalButtonText = demoId === 'demo-2' ? 
-                    'Dùng thử (các đối tượng 3D cần nhiều tài nguyên để tải, vui lòng chờ đợi ít phút sau khi nhấn)' : 
+                    'Dùng thử (3D cần nhiều tài nguyên hơn thông thường)' : 
                     'Dùng thử';
                 
                 // Sau khi animation kết thúc, ẩn container và khôi phục button
@@ -572,10 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     // Thay đổi nội dung nút
                                     newButton.innerHTML = `<i class="fas fa-times"></i>`;
                                     newButton.classList.add('close-demo');
-                                    
-                                    // Áp dụng transition cho thuộc tính transform và position
                                     setTimeout(() => {
-                                        // Hiển thị nút với hiệu ứng fade-in ở vị trí mới
                                         newButton.style.opacity = '1';
                                     }, 50);
                                 }, 300);

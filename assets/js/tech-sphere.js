@@ -97,6 +97,9 @@ class TechSphere {
         this.isInitialized = false;
         this.edgeDensity = 0.3;
         
+        // Kiểm tra xem người dùng đã bật hiệu ứng 3D chưa (mặc định là tắt)
+        this.isEnabled = localStorage.getItem('techSphereEnabled') === 'true';
+        
         this.initContainer();
         
         this.setupScrollObserver();
@@ -118,18 +121,109 @@ class TechSphere {
         container.style.overflow = 'hidden';
         container.style.position = 'relative';
         
+        // Thêm switch thay vì nút chuyển đổi
+        const switchContainer = document.createElement('div');
+        switchContainer.className = 'tech-sphere-switch-container';
+        switchContainer.style.position = 'absolute';
+        switchContainer.style.top = '15px';
+        switchContainer.style.right = '15px';
+        switchContainer.style.zIndex = '10';
+        switchContainer.style.display = 'flex';
+        switchContainer.style.alignItems = 'center';
+        switchContainer.style.padding = '6px 10px';
+        switchContainer.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
+        switchContainer.style.borderRadius = '20px';
+        switchContainer.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+        
+        // Tạo label
+        const label = document.createElement('label');
+        label.textContent = '3D view';
+        label.style.marginRight = '10px';
+        label.style.fontSize = '14px';
+        label.style.fontWeight = '500';
+        label.style.color = '#333';
+        label.style.userSelect = 'none';
+        label.style.cursor = 'pointer';
+        
+        // Tạo switch
+        const switchWrapper = document.createElement('div');
+        switchWrapper.className = 'switch-wrapper';
+        switchWrapper.style.position = 'relative';
+        switchWrapper.style.display = 'inline-block';
+        switchWrapper.style.width = '40px';
+        switchWrapper.style.height = '20px';
+        
+        const switchInput = document.createElement('input');
+        switchInput.type = 'checkbox';
+        switchInput.checked = this.isEnabled;
+        switchInput.style.opacity = '0';
+        switchInput.style.width = '0';
+        switchInput.style.height = '0';
+        
+        const switchSlider = document.createElement('span');
+        switchSlider.className = 'switch-slider';
+        switchSlider.style.position = 'absolute';
+        switchSlider.style.cursor = 'pointer';
+        switchSlider.style.top = '0';
+        switchSlider.style.left = '0';
+        switchSlider.style.right = '0';
+        switchSlider.style.bottom = '0';
+        switchSlider.style.backgroundColor = this.isEnabled ? '#4CAF50' : '#ccc';
+        switchSlider.style.borderRadius = '20px';
+        switchSlider.style.transition = '0.3s';
+        switchSlider.style.border = '1px solid rgba(0, 0, 0, 0.1)';
+        
+        // Tạo nút tròn bên trong switch
+        const switchButton = document.createElement('span');
+        switchButton.style.position = 'absolute';
+        switchButton.style.content = '""';
+        switchButton.style.height = '16px';
+        switchButton.style.width = '16px';
+        switchButton.style.left = this.isEnabled ? '22px' : '2px';
+        switchButton.style.bottom = '1px';
+        switchButton.style.backgroundColor = 'white';
+        switchButton.style.borderRadius = '50%';
+        switchButton.style.transition = '0.3s';
+        switchButton.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.2)';
+        
+        switchSlider.appendChild(switchButton);
+        switchWrapper.appendChild(switchInput);
+        switchWrapper.appendChild(switchSlider);
+        
+        // Thêm sự kiện click cho cả label và switch
+        label.addEventListener('click', () => {
+            this.toggleEnable();
+        });
+        
+        switchWrapper.addEventListener('click', () => {
+            this.toggleEnable();
+        });
+        
+        // Thêm label và switch vào container
+        switchContainer.appendChild(label);
+        switchContainer.appendChild(switchWrapper);
+        container.appendChild(switchContainer);
+        
+        // Tạo placeholder
         const placeholder = document.createElement('div');
         placeholder.className = 'tech-sphere-placeholder';
-        placeholder.innerHTML = `
-            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
-                <div class="dots-animation">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+        
+        if (!this.isEnabled) {
+            // Nếu đã tắt, hiển thị danh sách thay vì hiệu ứng 3D
+            this.createStaticList(placeholder);
+        } else {
+            placeholder.innerHTML = `
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                    <div class="dots-animation">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <p>Đang tải dữ liệu...</p>
                 </div>
-                <p>Đang tải dữ liệu...</p>
-            </div>
-        `;
+            `;
+        }
+        
         container.appendChild(placeholder);
         
         this.renderer.setSize(maxWidth, height);
@@ -147,10 +241,12 @@ class TechSphere {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     this.isVisible = true;
-                    if (!this.isInitialized) {
-                        this.lazyInitialize();
-                    } else {
-                        this.startAnimation();
+                    if (this.isEnabled) {
+                        if (!this.isInitialized) {
+                            this.lazyInitialize();
+                        } else {
+                            this.startAnimation();
+                        }
                     }
                 } else {
                     this.isVisible = false;
@@ -166,7 +262,7 @@ class TechSphere {
     }
 
     lazyInitialize() {
-        if (this.isInitialized) return;
+        if (this.isInitialized || !this.isEnabled) return;
         
         const container = document.querySelector('.tech-sphere-container');
         if (!container) return;
@@ -212,7 +308,7 @@ class TechSphere {
     }
 
     startAnimation() {
-        if (!this.animationFrameId && this.isVisible) {
+        if (!this.animationFrameId && this.isVisible && this.isEnabled) {
             this.animate();
         }
     }
@@ -286,7 +382,7 @@ class TechSphere {
     }
 
     animate() {
-        if (!this.isVisible) {
+        if (!this.isVisible || !this.isEnabled) {
             this.animationFrameId = null;
             return;
         }
@@ -305,7 +401,7 @@ class TechSphere {
     }
 
     onMouseMove(event) {
-        if (!this.isVisible || !this.isInitialized) return;
+        if (!this.isVisible || !this.isInitialized || !this.isEnabled) return;
         
         const container = document.querySelector('.tech-sphere-container');
         const rect = container.getBoundingClientRect();
@@ -342,7 +438,7 @@ class TechSphere {
     }
 
     updateTitle() {
-        const totalTech = this.nodes.length;
+        const totalTech = Object.values(techGroups).flat().length;
         let groupCounts = '';
         Object.entries(techGroups).forEach(([groupName, technologies]) => {
             groupCounts += `<div class="tag">${groupName}: ${technologies.length}</div>`;
@@ -367,7 +463,7 @@ class TechSphere {
     }
 
     onWindowResize() {
-        if (!this.isInitialized) return;
+        if (!this.isInitialized || !this.isEnabled) return;
         
         const container = document.querySelector('.tech-sphere-container');
         if (!container) return;
@@ -382,6 +478,65 @@ class TechSphere {
         this.camera.aspect = maxWidth / height;
         this.camera.updateProjectionMatrix();
         this.renderer.setSize(maxWidth, height);
+    }
+    
+    // Tạo danh sách tĩnh thay vì hiệu ứng 3D
+    createStaticList(container) {
+        container.style.overflow = 'auto';
+        container.style.padding = '20px';
+        container.style.height = '100%';
+        container.style.boxSizing = 'border-box';
+        
+        const listContainer = document.createElement('div');
+        listContainer.style.display = 'flex';
+        listContainer.style.flexDirection = 'column';
+        listContainer.style.gap = '15px';
+        listContainer.style.position = 'absolute';
+        listContainer.style.top = '50px';
+        
+        Object.entries(techGroups).forEach(([groupName, technologies]) => {
+            const groupContainer = document.createElement('div');
+            groupContainer.style.marginBottom = '20px'; // Tăng khoảng cách giữa các nhóm
+            
+            const groupTitle = document.createElement('h3');
+            groupTitle.textContent = `${groupName} (${technologies.length})`;
+            groupTitle.style.fontSize = '16px';
+            groupTitle.style.marginBottom = '10px';
+            groupContainer.appendChild(groupTitle);
+            
+            const techList = document.createElement('div');
+            techList.style.display = 'flex';
+            techList.style.flexWrap = 'wrap';
+            techList.style.gap = '8px'; // Tăng khoảng cách giữa các thẻ
+            
+            technologies.forEach(tech => {
+                const techTag = document.createElement('span');
+                techTag.textContent = tech;
+                techTag.style.backgroundColor = '#f0f0f0';
+                techTag.style.padding = '5px 10px'; // Tăng padding để tránh cắt chữ
+                techTag.style.borderRadius = '4px';
+                techTag.style.fontSize = '13px'; // Tăng kích thước font
+                techTag.style.color = '#000'; // Đặt màu đen cho text của stack
+                techTag.style.display = 'inline-block';
+                techTag.style.marginBottom = '5px'; // Thêm margin dưới để tránh cắt chữ
+                techTag.style.whiteSpace = 'nowrap'; // Ngăn chữ bị ngắt dòng
+                techList.appendChild(techTag);
+            });
+            
+            groupContainer.appendChild(techList);
+            listContainer.appendChild(groupContainer);
+        });
+        
+        container.appendChild(listContainer);
+    }
+    
+    // Chuyển đổi giữa hiệu ứng 3D và danh sách tĩnh
+    toggleEnable() {
+        this.isEnabled = !this.isEnabled;
+        localStorage.setItem('techSphereEnabled', this.isEnabled);
+        
+        // Cập nhật lại trang để áp dụng thay đổi
+        window.location.reload();
     }
     
     dispose() {
