@@ -123,4 +123,7 @@
         width: 100% !important;
         margin: 10px !important;
     }
-} 
+    .responsive-widget {
+        width: 60%;
+    }
+}
