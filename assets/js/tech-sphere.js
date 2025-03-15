@@ -121,7 +121,7 @@ class TechSphere {
         container.style.overflow = 'hidden';
         container.style.position = 'relative';
         
-        // Thêm switch thay vì nút chuyển đổi
+        // Thiết kế lại switch hiện đại hơn
         const switchContainer = document.createElement('div');
         switchContainer.className = 'tech-sphere-switch-container';
         switchContainer.style.position = 'absolute';
@@ -130,28 +130,55 @@ class TechSphere {
         switchContainer.style.zIndex = '10';
         switchContainer.style.display = 'flex';
         switchContainer.style.alignItems = 'center';
-        switchContainer.style.padding = '6px 10px';
-        switchContainer.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
-        switchContainer.style.borderRadius = '20px';
-        switchContainer.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.1)';
+        switchContainer.style.padding = '8px 12px';
+        switchContainer.style.backgroundColor = 'rgba(30, 30, 30, 0.85)';
+        switchContainer.style.backdropFilter = 'blur(5px)';
+        switchContainer.style.borderRadius = '30px';
+        switchContainer.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
+        switchContainer.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+        switchContainer.style.transition = 'all 0.3s ease';
+        
+        // Hover effect cho container
+        switchContainer.addEventListener('mouseenter', () => {
+            switchContainer.style.transform = 'translateY(-2px)';
+            switchContainer.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.25)';
+        });
+        
+        switchContainer.addEventListener('mouseleave', () => {
+            switchContainer.style.transform = 'translateY(0)';
+            switchContainer.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
+        });
+        
+        // Tạo icon 3D
+        const icon3D = document.createElement('span');
+        icon3D.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 22L3 17V7L12 2L21 7V17L12 22Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M12 22V12" stroke="white" stroke-width="2"/>
+            <path d="M12 12L21 7" stroke="white" stroke-width="2"/>
+            <path d="M12 12L3 7" stroke="white" stroke-width="2"/>
+        </svg>`;
+        icon3D.style.marginRight = '8px';
+        icon3D.style.display = 'flex';
+        icon3D.style.alignItems = 'center';
         
         // Tạo label
         const label = document.createElement('label');
         label.textContent = '3D view';
-        label.style.marginRight = '10px';
+        label.style.marginRight = '12px';
         label.style.fontSize = '14px';
-        label.style.fontWeight = '500';
-        label.style.color = '#333';
+        label.style.fontWeight = '600';
+        label.style.color = 'white';
         label.style.userSelect = 'none';
         label.style.cursor = 'pointer';
+        label.style.letterSpacing = '0.5px';
         
         // Tạo switch
         const switchWrapper = document.createElement('div');
         switchWrapper.className = 'switch-wrapper';
         switchWrapper.style.position = 'relative';
         switchWrapper.style.display = 'inline-block';
-        switchWrapper.style.width = '40px';
-        switchWrapper.style.height = '20px';
+        switchWrapper.style.width = '46px';
+        switchWrapper.style.height = '24px';
         
         const switchInput = document.createElement('input');
         switchInput.type = 'checkbox';
@@ -168,23 +195,34 @@ class TechSphere {
         switchSlider.style.left = '0';
         switchSlider.style.right = '0';
         switchSlider.style.bottom = '0';
-        switchSlider.style.backgroundColor = this.isEnabled ? '#4CAF50' : '#ccc';
-        switchSlider.style.borderRadius = '20px';
-        switchSlider.style.transition = '0.3s';
-        switchSlider.style.border = '1px solid rgba(0, 0, 0, 0.1)';
+        switchSlider.style.backgroundColor = this.isEnabled ? '#4CAF50' : 'rgba(255, 255, 255, 0.2)';
+        switchSlider.style.borderRadius = '24px';
+        switchSlider.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
         
         // Tạo nút tròn bên trong switch
         const switchButton = document.createElement('span');
         switchButton.style.position = 'absolute';
         switchButton.style.content = '""';
-        switchButton.style.height = '16px';
-        switchButton.style.width = '16px';
-        switchButton.style.left = this.isEnabled ? '22px' : '2px';
-        switchButton.style.bottom = '1px';
+        switchButton.style.height = '20px';
+        switchButton.style.width = '20px';
+        switchButton.style.left = this.isEnabled ? '24px' : '2px';
+        switchButton.style.top = '2px';
         switchButton.style.backgroundColor = 'white';
         switchButton.style.borderRadius = '50%';
-        switchButton.style.transition = '0.3s';
-        switchButton.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.2)';
+        switchButton.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        switchButton.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.3)';
+        
+        // Thêm icon vào nút
+        if (this.isEnabled) {
+            switchButton.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 4px; left: 4px;">
+                <path d="M5 13L9 17L19 7" stroke="#4CAF50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`;
+        } else {
+            switchButton.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 4px; left: 4px;">
+                <path d="M18 6L6 18" stroke="#999" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 6L18 18" stroke="#999" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`;
+        }
         
         switchSlider.appendChild(switchButton);
         switchWrapper.appendChild(switchInput);
@@ -195,11 +233,16 @@ class TechSphere {
             this.toggleEnable();
         });
         
+        icon3D.addEventListener('click', () => {
+            this.toggleEnable();
+        });
+        
         switchWrapper.addEventListener('click', () => {
             this.toggleEnable();
         });
         
-        // Thêm label và switch vào container
+        // Thêm icon, label và switch vào container
+        switchContainer.appendChild(icon3D);
         switchContainer.appendChild(label);
         switchContainer.appendChild(switchWrapper);
         container.appendChild(switchContainer);
