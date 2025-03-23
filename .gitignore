@@ -1,4 +1,14 @@
-node_modules
+.*
+!.gitignore
+!.cursorrules
+node_modules/
+dist/
+src/
+package-lock.json
+webpack.config.js
+.babelrc
+stats.json
+size-report.txt
 .DS_Store
 .env
 .env.local
@@ -9,3 +19,4 @@ node_modules
 .cursorrules
 .cursorignore
 .cursor
+*.txt
